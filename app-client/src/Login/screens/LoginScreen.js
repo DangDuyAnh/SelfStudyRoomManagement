@@ -5,10 +5,10 @@ import {
 } from "react-native";
 // import Icon from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/AntDesign';
-// import { AuthContext } from "../../components/context";
+import { AuthContext } from "../../components/context";
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-// import apiClient from "../../api/client";
+import apiClient from "../../api/client";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon1 from 'react-native-vector-icons/Entypo';
 
@@ -39,7 +39,7 @@ export default function Login({ navigation }) {
     password: '123456'
   };
   // const { signIn } = React.useContext(AuthContext);
-  // const context = React.useContext(AuthContext)
+  const context = React.useContext(AuthContext)
 
   const login = async (values) => {
     try {
