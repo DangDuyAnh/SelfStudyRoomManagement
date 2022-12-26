@@ -30,6 +30,8 @@ export default class Sidebar extends Component {
           </div>
           <nav className="mt-2">
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+              <li className="nav-header">QUẢN LÝ THÔNG TIN PHÒNG</li>
+              
               <li className="nav-item menu-open">
                 <a href="#" className="nav-link active">
                   <i className="fas fa-circle nav-icon" />
@@ -40,21 +42,53 @@ export default class Sidebar extends Component {
                 </a>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <a href="./index.html" className="nav-link active">
+                    <a href="#" className="nav-link active">
                       <i className="far fa-circle nav-icon" />
                       <p>Chung</p>
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a href="./index2.html" className="nav-link">
+                    <a href="#" className="nav-link">
                       <i className="far fa-circle nav-icon" />
-                      <p>Tòa 1</p>
+                      <p>
+                        Chi tiết
+                        <i className="right fas fa-angle-left" />
+                      </p>
                     </a>
+                    <ul className="nav nav-treeview">
+                      <li className="nav-item">
+                        <a href="#" className="nav-link">
+                          <i className="far fa-dot-circle nav-icon" />
+                          <p>D3</p>
+                        </a>
+                      </li>
+                      <li className="nav-item">
+                        <a href="#" className="nav-link">
+                          <i className="far fa-dot-circle nav-icon" />
+                          <p>D5</p>
+                        </a>
+                      </li>
+                    </ul>
                   </li>
+                </ul>
+              </li>
+
+              <li className="nav-header">QUẢN LÝ SỬ DỤNG PHÒNG</li>
+              <li className="nav-item">
+                <a href="#" className="nav-link">
+                  <i className="fas fa-circle nav-icon" />
+                  <p>
+                    Tình trạng phòng 
+                    <i className="right fas fa-angle-left" />
+                  </p>
+                </a>
+                <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <a href="./index3.html" className="nav-link">
-                      <i className="far fa-circle nav-icon" />
-                      <p>Tòa 2</p>
+                    <a href="#" className="nav-link">
+                      <i className="nav-icon far fa-image" />
+                      <p>
+                        Chung
+                      </p>
                     </a>
                   </li>
                 </ul>
@@ -64,16 +98,8 @@ export default class Sidebar extends Component {
                 <a href="pages/gallery.html" className="nav-link">
                   <i className="nav-icon far fa-image" />
                   <p>
-                    Tình trạng phòng
-                  </p>
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a href="pages/gallery.html" className="nav-link">
-                  <i className="nav-icon far fa-image" />
-                  <p>
-                    Thiết lập lịch
+                    Lịch rảnh các phòng
+                    <i className="right fas fa-angle-left" />
                   </p>
                 </a>
               </li>
@@ -82,9 +108,29 @@ export default class Sidebar extends Component {
                 <a href="pages/gallery.html" className="nav-link">
                   <i className="nav-icon far fa-image" />
                   <p>
-                    Đơn
+                    Sinh viên đăng ký
                   </p>
                   <span className="badge badge-info right">2</span>
+                </a>
+              </li>
+
+              <li className="nav-header">QUẢN LÝ NGƯỜI DÙNG</li>
+
+              <li className="nav-item">
+                <a href="pages/gallery.html" className="nav-link">
+                  <i className="nav-icon far fa-image" />
+                  <p>
+                    Danh sách người dùng
+                  </p>
+                </a>
+              </li>
+
+              <li className="nav-item">
+                <a href="pages/gallery.html" className="nav-link">
+                  <i className="nav-icon far fa-image" />
+                  <p>
+                    Tạo tài khoản người dùng
+                  </p>
                 </a>
               </li>
             </ul>
