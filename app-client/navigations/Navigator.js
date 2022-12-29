@@ -7,6 +7,7 @@ import {
 
 import LoginScreen from "../screens/login/LoginScreen";
 import { MenuScreen } from "../screens/home/MenuScreen";
+import Register from "../screens/register/RegisterScreen";
 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -41,6 +42,17 @@ export const Navigator = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={() => ({
+            headerShown: false,
+            headerTransparent: true,
+            statusBarTranslucent: false,
+            statusBarColor: "transparent",
+            statusBarTranslucent: true,
+          })}
+        />
+        <Stack.Screen
+          name="Register"
+          component={Register}
           options={() => ({
             headerShown: false,
             headerTransparent: true,

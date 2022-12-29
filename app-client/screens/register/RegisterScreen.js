@@ -14,14 +14,16 @@ import { InputField } from "../../components/login/InputField";
 import color from "../../constants/color/color";
 import { login } from "../../redux/features/auth/authSlice";
 
-export default function LoginScreen({ navigation }) {
+export default function Register({ navigation }) {
   const dispatch = useDispatch()
   const error = useSelector(state=> state.auth.error)
 
 
   const [account, setAccount] = useState({
-    phoneNumber: '1',
-    password: ''
+    mssv: '1',
+    name: '',
+    password: '',
+    confirmPassword: ''
   })
   const changeAccount = useCallback((key)=> {
     return (val)=> {
@@ -34,9 +36,17 @@ export default function LoginScreen({ navigation }) {
     }
   }, [account])
 
-  const handleLogin = ()=> {
-    dispatch(login(account))
+  const handleRegister = ()=> {
+    if (account.password !== account.confirmPassword) {
+        alert('Password mismatch')
+      }
+    else {
+        navigation.navigate("Login")
+    }
+    // dispatch(login(account))
   }
+
+
 
   return (     
         <ScrollView style={styles.container}>
@@ -52,9 +62,9 @@ export default function LoginScreen({ navigation }) {
               
             </View>
             <View style={styles.inputContainer}>
-              
-              <InputField placeholder="Số điện thoại hoặc email" keyName="phoneNumber" val={account.phoneNumber} onChangeVal={changeAccount}/>
-  
+              <InputField placeholder="Mã số sinh viên" keyName="mssv" val={account.mssv} onChangeVal={changeAccount} numeric={true}/ >
+              <InputField placeholder="Họ và tên" keyName="name" val={account.name} onChangeVal={changeAccount}/>
+
               <InputField
                 placeholder="Mật khẩu"
                 secured={true}
@@ -63,38 +73,36 @@ export default function LoginScreen({ navigation }) {
                 val={account.password}
                 onChangeVal={changeAccount}
               />
+              <InputField
+                placeholder="Xác thực mật khẩu"
+                secured={true}
+                isLastInputField={true}
+                keyName="confirmPassword"
+                val={account.confirmPassword}
+                onChangeVal={changeAccount}
+              />
               <TouchableOpacity
-                onPress={handleLogin}
+                onPress={handleRegister}
                 style={styles.loginButton}
               >
                 <Text
                   style={styles.loginButtonText}
                 >
-                  Đăng nhập
+                  Đăng ký
                 </Text>
               </TouchableOpacity>
-              <TouchableHighlight
-                underlayColor={color.TouchableHighlightBorderWhite}
-                onPress={() => {}}
-                style={styles.forgotPWButton}
-              >
-                  <Text
-                    style={styles.forgotPWText}
-                  >
-                    Quên mật khẩu?
-                  </Text>
-              </TouchableHighlight>
+             
             </View>
           </View>
           <View style={styles.footerContainer}>
             <BreakLineBody />
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}
               style={styles.createNewAccountButton}
             >
               <Text
                 style={styles.createNewAccountText}
               >
-                Tạo tài khoản mới
+                Đăng nhập
               </Text>
             </TouchableOpacity>
           </View>
