@@ -53,7 +53,7 @@ export default function LoginScreen({ navigation }) {
             </View>
             <View style={styles.inputContainer}>
               
-              <InputField placeholder="Số điện thoại hoặc email" keyName="phoneNumber" val={account.phoneNumber} onChangeVal={changeAccount}/>
+              <InputField placeholder="Mã số sinh viên" keyName="phoneNumber" val={account.phoneNumber} onChangeVal={changeAccount}/>
   
               <InputField
                 placeholder="Mật khẩu"

@@ -6,14 +6,14 @@ import {
 } from "react-native";
 
 import LoginScreen from "../screens/login/LoginScreen";
-import { MenuScreen } from "../screens/home/MenuScreen";
+import { Profile } from "../screens/home/Profile";
 import Register from "../screens/register/RegisterScreen";
 
 
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RETRIEVE_TOKEN } from "../redux/features/auth/authSlice";
-
+import { TabBarNavigator } from "./top-tab-bar/TabBarNavigator";
 
 const Stack = createNativeStackNavigator();
 export const Navigator = () => {
@@ -63,12 +63,8 @@ export const Navigator = () => {
         />
       </Stack.Navigator>
       :
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Menu"
-          component={MenuScreen}
-        />
-      </Stack.Navigator>
+      <TabBarNavigator/>
+      
 }
     </NavigationContainer>
   );

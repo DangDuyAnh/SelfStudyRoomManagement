@@ -7,48 +7,41 @@ import {
   Image,
   Text
 } from "react-native";
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
 
-function App(props) {
+export default function Home(props) {
   return (
     <View style={styles.container}>
       <View style={styles.rect}>
-        <TextInput placeholder="HUST" style={styles.textInput}></TextInput>
+        <Text style={styles.textInput}>HUST</Text>
       </View>
       <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.button}>
-          <Image
-            source={require("./assets/Mizuhara.Chizuru.full.3007141.jpg")}
-            resizeMode="contain"
-            style={styles.image}
-          ></Image>
+        <AntDesign name="form" resizeMode="contain"
+            style={styles.image2} size={65} color="red" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button1}>
-          <Image
-            source={require("./assets/Mizuhara.Chizuru.full.3007141.jpg")}
-            resizeMode="contain"
-            style={styles.image4}
-          ></Image>
+        <AntDesign name="barschart" resizeMode="contain"
+            style={styles.image2} size={65} color="red" />
         </TouchableOpacity>
       </View>
       <View style={styles.button3Row}>
         <TouchableOpacity style={styles.button3}>
-          <Image
-            source={require("./assets/Mizuhara.Chizuru.full.3007141.jpg")}
-            resizeMode="contain"
-            style={styles.image5}
-          ></Image>
+        <MaterialIcons name="history" resizeMode="contain"
+            style={styles.image} size={65} color="red" />
+          
         </TouchableOpacity>
         <TouchableOpacity style={styles.button2}>
-          <Image
-            source={require("./assets/Mizuhara.Chizuru.full.3007141.jpg")}
-            resizeMode="contain"
-            style={styles.image2}
-          ></Image>
+        <AntDesign name="calculator" resizeMode="contain"
+            style={styles.image2} size={65} color="red" />
+         
         </TouchableOpacity>
       </View>
       <View style={styles.image6Row}>
         <Image
-          source={require("./assets/Mizuhara.Chizuru.full.3007141.jpg")}
+          source={require("../../assets/Mizuhara.Chizuru.full.3007141.jpg")}
           resizeMode="contain"
           style={styles.image6}
         ></Image>
@@ -61,10 +54,8 @@ function App(props) {
         <Text style={styles.xemTinhTrạng}>Xem tình trạng</Text>
       </View>
       <View style={styles.rect1}>
-        <View style={styles.trangChủRow}>
-          <Text style={styles.trangChủ}>Trang chủ</Text>
-          <Text style={styles.profile}>Profile</Text>
-        </View>
+        
+ 
       </View>
       <View style={styles.lịchSửDangKyRow}>
         <Text style={styles.lịchSửDangKy}>Lịch sử đăng ký</Text>
@@ -80,24 +71,26 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   rect: {
-    width: 375,
+    width: 876,
     height: 43,
-    backgroundColor: "#E6E6E6",
-    marginTop: 41
+    backgroundColor: "red",
+    // marginTop: 41,
+    marginLeft: -314
   },
   textInput: {
     fontFamily: "roboto-regular",
-    color: "rgba(237,17,17,1)",
+    color: "white",
     width: 99,
     height: 30,
     fontSize: 26,
-    marginTop: 7,
-    marginLeft: 154
+    marginTop: 3,
+    marginLeft: 480
   },
   button: {
     width: 112,
     height: 100,
-    backgroundColor: "#E6E6E6"
+    borderRadius: 20,
+    backgroundColor: "rgb(195,231,234)"
   },
   image: {
     width: 65,
@@ -108,7 +101,8 @@ const styles = StyleSheet.create({
   button1: {
     width: 112,
     height: 100,
-    backgroundColor: "#E6E6E6",
+    borderRadius: 20,
+    backgroundColor: "rgb(195,231,234)",
     marginLeft: 74
   },
   image4: {
@@ -127,7 +121,8 @@ const styles = StyleSheet.create({
   button3: {
     width: 112,
     height: 100,
-    backgroundColor: "#E6E6E6"
+    borderRadius: 20,
+    backgroundColor: "rgb(195,231,234)"
   },
   image5: {
     width: 65,
@@ -138,7 +133,8 @@ const styles = StyleSheet.create({
   button2: {
     width: 112,
     height: 100,
-    backgroundColor: "#E6E6E6",
+    borderRadius: 20,
+    backgroundColor: "rgb(195,231,234)",
     marginLeft: 74
   },
   image2: {
@@ -208,11 +204,27 @@ const styles = StyleSheet.create({
     marginRight: 36
   },
   rect1: {
-    width: 375,
-    height: 54,
-    backgroundColor: "#E6E6E6",
+    width: 712,
+    height: 70,
+    backgroundColor: "white",
+    marginTop: 320,
+    marginLeft: -208
+  },
+  image7: {
+    width: 50,
+    height: 50
+  },
+  image9: {
+    width: 50,
+    height: 50,
+    marginLeft: 92
+  },
+  image7Row: {
+    height: 50,
     flexDirection: "row",
-    marginTop: 350
+    marginTop: 11,
+    marginLeft: 299,
+    marginRight: 221
   },
   trangChủ: {
     fontFamily: "roboto-regular",
@@ -223,15 +235,14 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     fontSize: 16,
-    marginLeft: 81
+    marginLeft: 84
   },
   trangChủRow: {
     height: 19,
     flexDirection: "row",
-    flex: 1,
-    marginRight: 97,
-    marginLeft: 80,
-    marginTop: 19
+    marginBottom: 10,
+    marginLeft: 288,
+    marginRight: 223
   },
   lịchSửDangKy: {
     fontFamily: "roboto-regular",
@@ -250,10 +261,8 @@ const styles = StyleSheet.create({
   lịchSửDangKyRow: {
     height: 63,
     flexDirection: "row",
-    marginTop: -232,
+    marginTop: -220,
     marginLeft: 45,
     marginRight: 36
   }
 });
-
-export default App;

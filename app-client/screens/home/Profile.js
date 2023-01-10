@@ -6,15 +6,14 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
+
 import color from "../../constants/color/color";
 
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LOGOUT } from "../../redux/features/auth/authSlice";
 
-export const MenuScreen = ({navigation}) => {
+export const Profile = ({navigation}) => {
   const dispatch = useDispatch()
   return (
     <ScrollView style={styles.container}>
@@ -134,10 +133,3 @@ const styles = StyleSheet.create({
   }
 });
 
-const ICON_SIZE = 20;
-const SettingIcon = () => (
-  <Ionicons name="settings-sharp" size={ICON_SIZE} color="black" />
-);
-const SearchIcon = () => (
-  <Feather name="search" size={ICON_SIZE} color="black" />
-);
