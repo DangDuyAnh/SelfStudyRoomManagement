@@ -79,7 +79,7 @@ export default class Sidebar2 extends Component {
                 </a>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <a href="pages/layout/top-nav.html" className="nav-link">
+                    <a href="#" className="nav-link">
                       <i className="far fa-circle nav-icon" />
                       <p>Top Navigation</p>
                     </a>
