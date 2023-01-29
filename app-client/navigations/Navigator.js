@@ -64,6 +64,7 @@ export const Navigator = () => {
       </Stack.Navigator>
       :
       <TabBarNavigator/>
+     
       
 }
     </NavigationContainer>
