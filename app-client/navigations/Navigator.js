@@ -9,7 +9,6 @@ import LoginScreen from "../screens/login/LoginScreen";
 import { Profile } from "../screens/home/Profile";
 import Register from "../screens/register/RegisterScreen";
 
-
 import { useDispatch, useSelector } from "react-redux";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RETRIEVE_TOKEN } from "../redux/features/auth/authSlice";
