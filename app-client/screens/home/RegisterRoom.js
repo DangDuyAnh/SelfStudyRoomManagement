@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     marginTop: 5,
-    fontWeight: "bold",
+    fontWeight: "bold"
   },
   placeholder4: {
     fontFamily: "roboto-regular",
