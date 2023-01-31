@@ -8,35 +8,38 @@ import {
   Text
 } from "react-native";
 import { SimpleLineIcons } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-export default function Home(props) {
+export default function Home({navigation}) {
   return (
     <View style={styles.container}>
       <View style={styles.rect}>
         <Text style={styles.textInput}>HUST</Text>
       </View>
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.button}>
-        <AntDesign name="form" resizeMode="contain"
+        <TouchableOpacity style={styles.button}
+          onPress={() => {
+            navigation.navigate("RegisterRoom")
+          }}>
+          <AntDesign name="form" resizeMode="contain"
             style={styles.image2} size={65} color="red" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button1}>
-        <AntDesign name="barschart" resizeMode="contain"
+          <AntDesign name="barschart" resizeMode="contain"
             style={styles.image2} size={65} color="red" />
         </TouchableOpacity>
       </View>
       <View style={styles.button3Row}>
         <TouchableOpacity style={styles.button3}>
-        <MaterialIcons name="history" resizeMode="contain"
+          <MaterialIcons name="history" resizeMode="contain"
             style={styles.image} size={65} color="red" />
-          
+
         </TouchableOpacity>
         <TouchableOpacity style={styles.button2}>
-        <AntDesign name="calculator" resizeMode="contain"
+          <AntDesign name="calculator" resizeMode="contain"
             style={styles.image2} size={65} color="red" />
-         
+
         </TouchableOpacity>
       </View>
       <View style={styles.image6Row}>
@@ -54,8 +57,8 @@ export default function Home(props) {
         <Text style={styles.xemTinhTrạng}>Xem tình trạng</Text>
       </View>
       <View style={styles.rect1}>
-        
- 
+
+
       </View>
       <View style={styles.lịchSửDangKyRow}>
         <Text style={styles.lịchSửDangKy}>Lịch sử đăng ký</Text>
