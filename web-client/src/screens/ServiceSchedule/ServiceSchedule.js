@@ -44,6 +44,7 @@ export default function ServiceSchedule() {
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DatePicker
                                             value={value}
+                                            inputFormat="DD.MM.YYYY"
                                             onChange={(newValue) => {
                                             setValue(newValue);
                                             }}
@@ -75,192 +76,194 @@ export default function ServiceSchedule() {
                                 </div>
                             </div>
                         </div>
-                              
-                        <div style={{display: 'inline-flex', flexWrap: 'wrap'}}>
-                            <div className='card' style={{margin: '15px'}}>
-                                <div className='card-body' style={{position: 'relative'}}>
-                                    <div>
-                                        <div style={{display: 'flex', alignItems: 'center'}}>
-                                            <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
-                                            <div style={{width: '170px'}}>
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PlaceIcon style={{fontSize: '20px'}}/>
-                                                    </div>
-                                                    <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
-                                                </div>
 
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
+                        <div style={{display: 'flex', justifyContent: 'center', width: '100%'}}>
+                            <div style={{display: 'inline-flex', flexWrap: 'wrap', width: '1140px'}}>
+                                <div className='card' style={{margin: '15px'}}>
+                                    <div className='card-body' style={{position: 'relative'}}>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
+                                                <div style={{width: '170px'}}>
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PlaceIcon style={{fontSize: '20px'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
                                                     </div>
-                                                    <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
-                                                </div>
 
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
                                                     </div>
-                                                    <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
-                                                </div>
 
-                                                <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
+                                                    </div>
+
+                                                    <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div style={{marginTop: '10px'}}>
-                                        <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
-                                            <li style={{margin: 0, padding: 0}}>8:00 - 12:00</li>
-                                            <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
-                                            <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
-                                        </ul>
-                                    </div>
+                                        <div style={{marginTop: '10px'}}>
+                                            <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
+                                                <li style={{margin: 0, padding: 0}}>8:00 - 12:00</li>
+                                                <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
+                                                <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
+                                            </ul>
+                                        </div>
 
-                                    <div className='more-info'>
-                                        <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        <div className='more-info'>
+                                            <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='card' style={{margin: '15px'}}>
+                                    <div className='card-body' style={{position: 'relative'}}>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
+                                                <div style={{width: '170px'}}>
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PlaceIcon style={{fontSize: '20px'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
+                                                    </div>
+
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
+                                                    </div>
+
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
+                                                    </div>
+
+                                                    <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style={{marginTop: '10px'}}>
+                                            <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
+                                                <li style={{margin: 0, padding: 0, color: 'red'}}>Không phục vụ</li>
+                                            </ul>
+                                        </div>
+
+                                        
+                                        <div className='more-info'>
+                                            <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div className='card' style={{margin: '15px'}}>
+                                    <div className='card-body' style={{position: 'relative'}}>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
+                                                <div style={{width: '170px'}}>
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PlaceIcon style={{fontSize: '20px'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
+                                                    </div>
+
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
+                                                    </div>
+
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
+                                                    </div>
+
+                                                    <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style={{marginTop: '10px'}}>
+                                            <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
+                                                <li style={{margin: 0, padding: 0}}>8:00 - 12:00</li>
+                                                <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
+                                                <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
+                                            </ul>
+                                        </div>
+
+                                        <div className='more-info'>
+                                            <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className='card' style={{margin: '15px'}}>
+                                    <div className='card-body' style={{position: 'relative'}}>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
+                                                <div style={{width: '170px'}}>
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PlaceIcon style={{fontSize: '20px'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
+                                                    </div>
+
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
+                                                        </div>
+                                                        <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
+                                                    </div>
+
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
+                                                    </div>
+
+                                                    <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style={{marginTop: '10px'}}>
+                                            <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
+                                                <li style={{margin: 0, padding: 0, color: 'red'}}>Không phục vụ</li>
+                                            </ul>
+                                        </div>
+
+                                        
+                                        <div className='more-info'>
+                                            <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
-
-                            <div className='card' style={{margin: '15px'}}>
-                                <div className='card-body' style={{position: 'relative'}}>
-                                    <div>
-                                        <div style={{display: 'flex', alignItems: 'center'}}>
-                                            <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
-                                            <div style={{width: '170px'}}>
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PlaceIcon style={{fontSize: '20px'}}/>
-                                                    </div>
-                                                    <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
-                                                </div>
-
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
-                                                    </div>
-                                                    <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
-                                                </div>
-
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
-                                                    </div>
-                                                    <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
-                                                </div>
-
-                                                <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style={{marginTop: '10px'}}>
-                                        <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
-                                            <li style={{margin: 0, padding: 0, color: 'red'}}>Không phục vụ</li>
-                                        </ul>
-                                    </div>
-
-                                    
-                                    <div className='more-info'>
-                                        <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div className='card' style={{margin: '15px'}}>
-                                <div className='card-body' style={{position: 'relative'}}>
-                                    <div>
-                                        <div style={{display: 'flex', alignItems: 'center'}}>
-                                            <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
-                                            <div style={{width: '170px'}}>
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PlaceIcon style={{fontSize: '20px'}}/>
-                                                    </div>
-                                                    <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
-                                                </div>
-
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
-                                                    </div>
-                                                    <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
-                                                </div>
-
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
-                                                    </div>
-                                                    <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
-                                                </div>
-
-                                                <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style={{marginTop: '10px'}}>
-                                        <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
-                                            <li style={{margin: 0, padding: 0}}>8:00 - 12:00</li>
-                                            <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
-                                            <li style={{margin: 0, padding: 0}}>13:00 - 18:00</li>
-                                        </ul>
-                                    </div>
-
-                                    <div className='more-info'>
-                                        <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className='card' style={{margin: '15px'}}>
-                                <div className='card-body' style={{position: 'relative'}}>
-                                    <div>
-                                        <div style={{display: 'flex', alignItems: 'center'}}>
-                                            <h3 style={{fontSize: '32px', margin: '25px 55px 45px 35px'}}>201</h3>
-                                            <div style={{width: '170px'}}>
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PlaceIcon style={{fontSize: '20px'}}/>
-                                                    </div>
-                                                    <p style={{fontWeight: '600'}}>Tòa D3 tầng 1</p>
-                                                </div>
-
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
-                                                    </div>
-                                                    <p style={{fontWeight: '600'}}>Phòng cá nhân</p>
-                                                </div>
-
-                                                <div className='row-icon'>
-                                                    <div>
-                                                        <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
-                                                    </div>
-                                                    <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng tự do</p>
-                                                </div>
-
-                                                <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div style={{marginTop: '10px'}}>
-                                        <ul style={{padding: '0px 0px 0px 35px', color: 'green', fontWeight: '600'}}>
-                                            <li style={{margin: 0, padding: 0, color: 'red'}}>Không phục vụ</li>
-                                        </ul>
-                                    </div>
-
-                                    
-                                    <div className='more-info'>
-                                        <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
+                        </div>   
 
                         <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: '40px'}}>
                             <nav aria-label="Page navigation example">
