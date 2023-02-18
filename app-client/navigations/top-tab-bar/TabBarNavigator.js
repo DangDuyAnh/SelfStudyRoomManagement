@@ -10,7 +10,7 @@ import { Fontisto } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { StyleSheet, Animated, Dimensions, View, StatusBar, Platform } from "react-native";
 import HomeStack from "../../screens/home/HomeStack";
-import { Profile } from "../../screens/home/Profile";
+import Profile from "../../screens/Profile/Profile";
 import RegisterRoom from "../../screens/home/RegisterRoom";
 import { useEffect, useState, useCallback, useRef } from "react";
 

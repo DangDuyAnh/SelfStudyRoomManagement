@@ -6,12 +6,12 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store/store";
 import LoginScreen from "./screens/login/LoginScreen";
 import { TabBarNavigator } from "./navigations/top-tab-bar/TabBarNavigator";
-
+import Profile from "./screens/Profile/Profile";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  // return <TabBarNavigator/>
+  // return <Profile/>
   
    return <Provider store={store}>{<Navigator />}</Provider>;
 }
