@@ -7,6 +7,8 @@ import CreateRoom from './screens/CreateRoom/CreateRoom';
 import DetailRoom from './screens/DetailRoom/DetailRoom';
 import ServiceSchedule from './screens/ServiceSchedule/ServiceSchedule';
 import DetailSchedule from './screens/DetailSchedule/DetailSchedule';
+import RoomStatus from './screens/RoomStatus';
+import WaitingRegister from './screens/WaitingRegister';
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
           <Route path='/detail-room' element={<DetailRoom />} />
           <Route path='/service-schedule' element={<ServiceSchedule />} />
           <Route path='/detail-schedule' element={<DetailSchedule />} />
+          <Route path='/room-status' element={<RoomStatus />}/>
+          <Route path='/waiting-register' element={<WaitingRegister />} />
         </Routes>
       </Router>
     </>
