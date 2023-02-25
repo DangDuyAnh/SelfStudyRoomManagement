@@ -1,0 +1,25 @@
+.my-datepicker {
+    background-color: white;
+    padding: 0;
+    margin: 0;
+}
+
+.more-info {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    left: 0;
+    background-color: #eeeeee}
+
+.more-info:hover {
+    cursor: pointer;
+    background-color: #e0e0e0;
+}
+
+.consider-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 10px;
+}
