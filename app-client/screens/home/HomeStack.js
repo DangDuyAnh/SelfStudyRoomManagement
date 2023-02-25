@@ -3,8 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Home';
 import RegisterRoom from './RegisterRoom';
 import QRScan from './QR';
+import StatusRoom from './StatusRoom';
 const Stack = createNativeStackNavigator();
-export default HomeStack = () => {
+export default function HomeStack () {
 
     return (
         <Stack.Navigator>
@@ -27,6 +28,14 @@ export default HomeStack = () => {
                 component={QRScan}
                 options={{ 
                     title: "Quét mã", 
+                    headerTintColor: 'white', 
+                    headerStyle: { backgroundColor: 'red' }  }}
+                />
+            <Stack.Screen
+                name="StatusRoom"
+                component={StatusRoom}
+                options={{ 
+                    title: "Xem tình trạng phòng", 
                     headerTintColor: 'white', 
                     headerStyle: { backgroundColor: 'red' }  }}
                 />
