@@ -4,14 +4,13 @@ import { Navigator } from "./navigations/Navigator";
 // import 'expo-dev-client';
 import { Provider } from "react-redux";
 import { store } from "./redux/store/store";
-import LoginScreen from "./screens/login/LoginScreen";
-import { TabBarNavigator } from "./navigations/top-tab-bar/TabBarNavigator";
 
+import StatusRoom from "./screens/home/StatusRoom";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  // return <TabBarNavigator/>
+  // return <StatusRoom/>
   
    return <Provider store={store}>{<Navigator />}</Provider>;
 }
