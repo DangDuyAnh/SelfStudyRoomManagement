@@ -5,7 +5,19 @@ const servedTimeSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    listTime: {
+    startTime: {
+        type: Date,
+        required: false
+    },
+    endTime: {
+        type: Date,
+        required: false
+    },
+    startEffectiveDate: {
+        type: Date,
+        required: false
+    },
+    endEffectiveDate: {
         type: Date,
         required: false
     }
