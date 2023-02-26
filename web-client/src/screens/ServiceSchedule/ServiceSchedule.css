@@ -23,3 +23,24 @@
     column-gap: 20px;
     row-gap: 10px;
 }
+
+.box-small-time {
+    border: 2px solid #bdbdbd;
+    margin: 10px;
+  }
+
+  .small-time {
+    margin: 0;
+    padding: 4px 20px 5px 20px;
+    font-size: 18px;
+    color: #616161;
+  }
+
+  .box-small-time:hover {
+    border: 2px solid black;
+    cursor: pointer;
+  }
+
+  .box-small-time:hover .small-time {
+    color: black;
+  }

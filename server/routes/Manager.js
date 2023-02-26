@@ -1,6 +1,14 @@
 const express = require("express");
 const managerSchema = require('../models/Manager')
 const app = express();
+const managerController = require("../controllers/Manager");
+const {asyncWrapper} = require("../utils/asyncWrapper");
+
+
+app.post(
+    "/manager/login",
+    asyncWrapper(managerController.login)
+);
 
 app.post('/manager/create', async(req, res) => {
     const u = new managerSchema(req.body);

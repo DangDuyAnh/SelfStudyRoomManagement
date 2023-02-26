@@ -1,22 +1,13 @@
-// const friendController = require("../controllers/Friends");
 const express = require("express");
-// const friendsRoutes = express.Router();
-// const ValidationMiddleware = require("../middlewares/validate");
-// const auth = require("../middlewares/auth");
 const roomSchema = require('../models/Room')
 const app = express();
+const roomController = require("../controllers/Room");
+const {asyncWrapper} = require("../utils/asyncWrapper");
 
-app.post('/room/create', async(req, res) => {
-    const u = new roomSchema(req.body);
-    console.log(req.body);
-    try{
-        await u.save();
-        res.send(u);
-        
-    }catch (error){
-        res.status(500).send(error);
-    }
-});
+app.post(
+    '/room/create',
+    asyncWrapper(roomController.create)
+);
 
 app.get('/room/list', async(req, res) => {
     const u = await roomSchema.find({});

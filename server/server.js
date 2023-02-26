@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const url = "mongodb+srv://vanh:vanh@qlht.kpuwx.mongodb.net/qlph?retryWrites=true&w=majority";
-const port = 3000;
+const port = 5000;
+const cors = require('cors');
 const Room = require('./routes/Room');
 const ServedTime = require('./routes/ServedTime');
 const Student = require('./routes/Student');
@@ -11,6 +12,7 @@ const UsingQRRoom = require('./routes/UsingQRRoom');
 const UsingRoom = require('./routes/UsingRoom');
 const Building = require('./routes/Building');
 app.use(express.json());
+app.use(cors());
 app.listen(port, () => {
     console.log("server start - " + port);
 })

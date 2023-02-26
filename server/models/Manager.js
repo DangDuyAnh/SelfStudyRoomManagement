@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 
 const managerSchema = new mongoose.Schema({
-    IDManager: {
-        type: Number,
-        required: true
-    },
     email: {
         type: String,
-        required: false
+        required: false,
+        unique: true
+    },
+    password: {
+        type: String
     },
     name: {
         type: String,
@@ -20,6 +20,9 @@ const managerSchema = new mongoose.Schema({
     avatarLink: {
         type: String,
         required: false
+    },
+    role : {
+        type: String
     }
 });
 module.exports = mongoose.model('Manager', managerSchema);

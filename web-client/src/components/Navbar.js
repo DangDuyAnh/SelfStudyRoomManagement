@@ -1,9 +1,30 @@
 import React, { Component } from 'react';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import Logout from '@mui/icons-material/Logout';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { authenticationService } from '../utils/authenticationService';
 
 import DefaultAvatar from "../assets/default_avatar.jpg";
 
-export default class Navbar extends Component {
-  render() {
+export default function Navbar(){
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    authenticationService.logout();
+    window.location = '/login'
+  }
+
     return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light" style={{height: '75px'}}>
         <ul className="navbar-nav">
@@ -12,77 +33,6 @@ export default class Navbar extends Component {
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
-          {/* <li className="nav-item">
-            <a className="nav-link" data-widget="navbar-search" href="#" role="button">
-              <i className="fas fa-search" />
-            </a>
-            <div className="navbar-search-block">
-              <form className="form-inline">
-                <div className="input-group input-group-sm">
-                  <input className="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" />
-                  <div className="input-group-append">
-                    <button className="btn btn-navbar" type="submit">
-                      <i className="fas fa-search" />
-                    </button>
-                    <button className="btn btn-navbar" type="button" data-widget="navbar-search">
-                      <i className="fas fa-times" />
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </li> */}
-          {/* <li className="nav-item dropdown">
-            <a className="nav-link" data-toggle="dropdown" href="#">
-              <i className="far fa-comments" />
-              <span className="badge badge-danger navbar-badge">3</span>
-            </a>
-            <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <a href="#" className="dropdown-item">
-                <div className="media">
-                  <img src="dist/img/user1-128x128.jpg" alt="User Avatar" className="img-size-50 mr-3 img-circle" />
-                  <div className="media-body">
-                    <h3 className="dropdown-item-title">
-                      Brad Diesel
-                      <span className="float-right text-sm text-danger"><i className="fas fa-star" /></span>
-                    </h3>
-                    <p className="text-sm">Call me whenever you can...</p>
-                    <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
-                  </div>
-                </div>
-              </a>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
-                <div className="media">
-                  <img src="dist/img/user8-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3" />
-                  <div className="media-body">
-                    <h3 className="dropdown-item-title">
-                      John Pierce
-                      <span className="float-right text-sm text-muted"><i className="fas fa-star" /></span>
-                    </h3>
-                    <p className="text-sm">I got your message bro</p>
-                    <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
-                  </div>
-                </div>
-              </a>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
-                <div className="media">
-                  <img src="dist/img/user3-128x128.jpg" alt="User Avatar" className="img-size-50 img-circle mr-3" />
-                  <div className="media-body">
-                    <h3 className="dropdown-item-title">
-                      Nora Silvester
-                      <span className="float-right text-sm text-warning"><i className="fas fa-star" /></span>
-                    </h3>
-                    <p className="text-sm">The subject goes here</p>
-                    <p className="text-sm text-muted"><i className="far fa-clock mr-1" /> 4 Hours Ago</p>
-                  </div>
-                </div>
-              </a>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item dropdown-footer">See All Messages</a>
-            </div>
-          </li> */}
           <li className="nav-item">
             <a className="nav-link" data-widget="fullscreen" href="#" role="button">
               <i className="fas fa-expand-arrows-alt" style={{fontSize: '24px', color: 'black'}}/>
@@ -116,13 +66,67 @@ export default class Navbar extends Component {
             </div>
           </li>
 
-          <li className="nav-item">
-            <div style={{display: "flex", alignItems: "center", height: "100%"}}>
-                <img src={DefaultAvatar} style={{width: "40px", height: "40px", borderRadius: "50%", cursor: 'pointer', margin: "0px 10px 0px 20px"}}/>
-            </div>
+          <li className="nav-item dropdown">
+            {/* <div style={{display: "flex", alignItems: "center", height: "100%"}}>
+                <img onClick={handleClick} src={DefaultAvatar} style={{width: "40px", height: "40px", borderRadius: "50%", cursor: 'pointer', margin: "0px 10px 0px 20px"}}/>
+            </div> */}
+              <Tooltip title="Account settings">
+                <IconButton
+                  onClick={handleClick}
+                  size="small"
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                >
+                  <AccountCircle sx={{ width: 32, height: 32, color: '#212121' }} />
+                </IconButton>
+              </Tooltip>
           </li>
         </ul>
+
+        <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
       </nav>
     )
-  }
 }

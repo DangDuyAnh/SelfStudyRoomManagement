@@ -1,18 +1,18 @@
 const express = require("express");
 const buildingSchema = require('../models/Building')
 const app = express();
+const buildingController = require("../controllers/Building");
+const {asyncWrapper} = require("../utils/asyncWrapper");
 
-app.post('/building/create', async(req, res) => {
-    const u = new buildingSchema(req.body);
-    console.log(req.body);
-    try{
-        await u.save();
-        res.send(u);
-        
-    }catch (error){
-        res.status(500).send(error);
-    }
-});
+app.post(
+    '/building/create',
+    asyncWrapper(buildingController.create) 
+);
+
+app.get(
+    '/building/findRooms/:id',
+    asyncWrapper(buildingController.findRooms)
+)
 
 app.get('/building/list', async(req, res) => {
     const u = await buildingSchema.find({});

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Stack from '@mui/material/Stack';
@@ -10,8 +10,18 @@ import AddBuilding from '../components/modals/AddBuilding.js';
 
 import Sidebar from '../components/Sidebar.js';
 import Navbar from '../components/Navbar.js';
-export default class Dashboard extends Component {
-  render() {
+import { axiosGet } from '../utils/api.js';
+export default function Dashboard() {
+    const [buildingList, setBuildingList] = React.useState([]);
+
+    useEffect(() => {
+        const getData = async () => {
+        const res = await axiosGet('/building/list');
+        setBuildingList(res.data)   
+        };
+        getData();    
+    })
+
     return (
     <div className="wrapper">
         <Navbar />
@@ -39,73 +49,34 @@ export default class Dashboard extends Component {
                     </Button>
 
                     <div>
-                        <div class="card">
-                            <div class="card-body">
-                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
-                                    <div>
-                                        <p style={{fontSize: '24px', fontWeight: '600'}}>Tòa D3</p>
-                                        <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Địa chỉ: </span>Temp</p>
-                                        <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số tầng: </span>Temp</p>
-                                        <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số phòng tự học: </span>Temp</p>
-                                    </div>
-                                    <Stack direction="row">
-                                    <IconButton aria-label="Edit" title="Edit" color="primary">
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton aria-label="Configure" title="Configure" style={{color: '#f9a825'}}>
-                                        <ApartmentIcon />
-                                    </IconButton>
-                                    <IconButton aria-label="delete" title="Delete" color="error">
-                                        <DeleteIcon />
-                                    </IconButton>
-                                    </Stack>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="card">
-                            <div class="card-body">
-                                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
-                                    <div>
-                                        <p style={{fontSize: '24px', fontWeight: '600'}}>Tòa D3</p>
-                                        <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Địa chỉ: </span>Temp</p>
-                                        <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số tầng: </span>Temp</p>
-                                        <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số phòng tự học: </span>Temp</p>
-                                    </div>
-                                    <Stack direction="row">
-                                    <IconButton aria-label="Edit" title="Edit" color="primary">
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton aria-label="Configure" title="Configure" style={{color: '#f9a825'}}>
-                                        <ApartmentIcon />
-                                    </IconButton>
-                                    <IconButton aria-label="delete" title="Delete" color="error">
-                                        <DeleteIcon />
-                                    </IconButton>
-                                    </Stack>
-                                </div>
-                            </div>
-                        </div>
-
-                            {/* <div>
-                                    <div style={{display: 'flex'}}>
-                                        <p style={{margin: 0, padding: 0,fontWeight: '500', width: '120px'}}>Địa chỉ:</p>
-                                        <p style={{margin: 0, padding: 0}}>Temp</p>
+                        {buildingList.map(item => {
+                            return(
+                                <div class="card">
+                                <div class="card-body">
+                                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+                                        <div>
+                                            <p style={{fontSize: '24px', fontWeight: '600'}}>Tòa D3</p>
+                                            <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Địa chỉ: </span>Temp</p>
+                                            <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số tầng: </span>Temp</p>
+                                            <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số phòng tự học: </span>Temp</p>
+                                        </div>
+                                        <Stack direction="row">
+                                        <IconButton aria-label="Edit" title="Edit" color="primary">
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton aria-label="Configure" title="Configure" style={{color: '#f9a825'}} onClick={() => {window.location = '/building/' + item._id}}>
+                                            <ApartmentIcon />
+                                        </IconButton>
+                                        <IconButton aria-label="delete" title="Delete" color="error">
+                                            <DeleteIcon />
+                                        </IconButton>
+                                        </Stack>
                                     </div>
                                 </div>
-                                <div>
-                                    <div style={{display: 'flex'}}>
-                                        <p style={{margin: 0, padding: 0,fontWeight: '500', width: '120px'}}>Số tầng:</p>
-                                        <p style={{margin: 0, padding: 0}}>Temp</p>
-                                    </div>
-                                </div>
-
-                                <div>
-                                <div style={{display: 'flex'}}>
-                                        <p style={{margin: 0, padding: 0,fontWeight: '500', width: '120px'}}>Số phòng tự học:</p>
-                                        <p style={{margin: 0, padding: 0}}>Temp</p>
-                                    </div>
-                            </div> */}
+                            </div> 
+                            )
+                        })}
                     </div>
                     </div>
 
@@ -114,5 +85,4 @@ export default class Dashboard extends Component {
         </div>
     </div>
     )
-  }
 }

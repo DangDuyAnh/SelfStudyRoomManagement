@@ -26,7 +26,7 @@ export default function DetailSchedule(){
 
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
-                                <li className="breadcrumb-item">Thiết lập lịch</li>
+                                <li className="breadcrumb-item">Lịch phục vụ</li>
                                 <li className="breadcrumb-item"><a href='#'>Chung</a></li>
                                 <li className="breadcrumb-item active"><a href="#">D3</a></li>
                                 </ol>
@@ -96,7 +96,7 @@ export default function DetailSchedule(){
 
                                 <div style={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                                     <Button variant="contained" color="success">
-                                        Thêm mới
+                                        Thiết lập
                                     </Button>
                                 </div>
                             </div>

@@ -1,19 +1,15 @@
 const mongoose = require("mongoose");
 
 const roomSchema = new mongoose.Schema({
-    IDRoom: {
-        type: Number,
-        required: true
+    idBuilding: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "buildings"
     },
-    IDBuilding: {
-        type: Number,
-        required: true
-    },
-    floors: {
+    floor: {
         type: Number,
         required: false
     },
-    nameBulding: {
+    name: {
         type: String,
         required: false
     },
@@ -25,7 +21,7 @@ const roomSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    acessType: {
+    accessType: {
         type: String,
         required: false
     },
@@ -37,7 +33,7 @@ const roomSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    status: {
+    qrCode: {
         type: String,
         required: false
     }

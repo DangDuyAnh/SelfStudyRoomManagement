@@ -25,7 +25,7 @@ export default function ServiceSchedule() {
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0">Thiết lập lịch</h1>
+                                <h1 className="m-0">Lịch phục vụ</h1>
                             </div>
                         </div>
                         

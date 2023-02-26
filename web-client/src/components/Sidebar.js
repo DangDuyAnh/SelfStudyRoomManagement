@@ -42,7 +42,7 @@ export default class Sidebar extends Component {
                 </a>
                 <ul className="nav nav-treeview">
                   <li className="nav-item">
-                    <a href="#" className="nav-link active">
+                    <a href="/" className="nav-link active">
                       <i className="far fa-circle nav-icon" />
                       <p>Chung</p>
                     </a>
@@ -125,7 +125,7 @@ export default class Sidebar extends Component {
                 <a href="/service-schedule" className="nav-link">
                 <i className="nav-icon far fa-calendar-alt" />
                   <p>
-                    Thiết lập lịch
+                    Lịch phục vụ
                     <i className="right fas fa-angle-left" />
                   </p>
                 </a>
