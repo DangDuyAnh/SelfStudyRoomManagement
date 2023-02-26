@@ -25,7 +25,9 @@ export default function Home({navigation}) {
           <AntDesign name="form" resizeMode="contain"
             style={styles.image2} size={65} color="red" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button1}>
+        <TouchableOpacity style={styles.button1} onPress={() => {
+            navigation.navigate("StatusRoom")
+          }}>
           <AntDesign name="barschart" resizeMode="contain"
             style={styles.image2} size={65} color="red" />
         </TouchableOpacity>

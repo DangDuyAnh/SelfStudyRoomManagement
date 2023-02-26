@@ -1,4 +1,5 @@
 const express = require("express");
+const xlsx = require('xlsx');
 const servedTimeSchema = require('../models/ServedTime')
 const app = express();
 
@@ -50,6 +51,35 @@ app.delete('/servedTime/delete/:id', async(req, res) => {
         const u = await servedTimeSchema.findByIdAndDelete(req.params.id);
         if(!u) res.status(404).send("No servedTime found!");
         res.status(200).send();
+        
+    }catch (error){
+        res.status(500).send(error);
+    }
+});
+
+app.post('/servedTime/createByExcel', async(req, res) => {
+    const startEffectiveDate = req.body.startEffectiveDate;
+    const endEffectiveDate = req.body.endEffectiveDate;
+    const IDRoom = -1, startTime = "", endTime = "";
+    const file = req.body.file;
+    if(file)
+    {const workbook = xlsx.read(file, { type: 'buffer' });
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    IDRoom = worksheet['A2'] ? worksheet['A2'].v : -1;
+    startTime = worksheet['B2'] ? worksheet['B2'].v : "";
+    endTime = worksheet['C2'] ? worksheet['C2'].v : "";}
+    
+    const u = new servedTimeSchema({
+        IDRoom: IDRoom,
+        startTime: startTime,
+        endTime: endTime,
+        startEffectiveDate: startEffectiveDate,
+        endEffectiveDate: endEffectiveDate
+    });
+
+    try{
+        await u.save();
+        res.send(u);
         
     }catch (error){
         res.status(500).send(error);
