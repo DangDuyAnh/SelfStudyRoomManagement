@@ -14,4 +14,4 @@ const buildingSchema = new mongoose.Schema({
         required: false
     }
 });
-module.exports = mongoose.model('Building', buildingSchema);
+module.exports = mongoose.model('buildings', buildingSchema);

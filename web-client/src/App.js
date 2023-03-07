@@ -25,7 +25,7 @@ function App() {
           <Route path='/detail-room' component={DetailRoom} />
           <Route path='/service-schedule' component={ServiceSchedule} />
           <Route path='/detail-schedule' component={DetailSchedule} />
-          <Route path='/schedule-configue' component={ScheduleConfigue} />
+          <Route path='/schedule-configue/:id' component={ScheduleConfigue} />
           <Route path='/room-status' component={RoomStatus}/>
           <Route path='/waiting-register' component={WaitingRegister} />
           <Route path='/create-account' component={AddAcount}/>

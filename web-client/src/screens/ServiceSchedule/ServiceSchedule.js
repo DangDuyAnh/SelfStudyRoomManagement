@@ -12,9 +12,19 @@ import { Button } from '@mui/material';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import PlaceIcon from '@mui/icons-material/Place';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import {axiosPost} from "../../utils/api" 
 
 export default function ServiceSchedule() {
-    const [value, setValue] = React.useState(null);
+    const [value, setValue] = React.useState(new Date());
+
+    const handleSearch = async () => {
+        const res = await axiosPost("/servedTime/search", {
+            date: value
+        })
+        console.log(res)
+    }
+
     return(
         <div className="wrapper">
             <Navbar />
@@ -70,7 +80,7 @@ export default function ServiceSchedule() {
                                 </div>
 
                                 <div className="form-group col-md-2">
-                                    <Button variant="contained" style={{marginBottom: '2px', padding: '6px 5px'}}>
+                                    <Button variant="contained" style={{marginBottom: '2px', padding: '6px 5px'}} onClick={handleSearch}>
                                         <SearchIcon />
                                     </Button>
                                 </div>

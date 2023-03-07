@@ -2,6 +2,8 @@ const express = require("express");
 const xlsx = require('xlsx');
 const servedTimeSchema = require('../models/ServedTime')
 const app = express();
+const servedTimeController = require("../controllers/ServedTime");
+const {asyncWrapper} = require("../utils/asyncWrapper");
 
 app.post('/servedTime/create', async(req, res) => {
     const u = new servedTimeSchema(req.body);
@@ -24,17 +26,9 @@ app.get('/servedTime/list', async(req, res) => {
     }
 });
 
-app.get('/servedTime/get/:id', async(req, res) => {
-    try{
-        const u = await servedTimeSchema.findById(req.params.id);
-        if(!u) res.status(404).send("No servedTime found!");
-        res.send(u);
-        res.status(200).send();
-        
-    }catch (error){
-        res.status(500).send(error);
-    }
-});
+app.get(
+    '/servedTime/get/:id',
+    asyncWrapper(servedTimeController.get));
 
 app.patch('/servedTime/update/:id', async(req, res) => {
     try{
@@ -46,7 +40,13 @@ app.patch('/servedTime/update/:id', async(req, res) => {
     }
 });
 
-app.delete('/servedTime/delete/:id', async(req, res) => {
+app.post('/servedTime/deleteByDate',
+    asyncWrapper(servedTimeController.deleteMany));
+
+app.post("/servedTime/search",
+    asyncWrapper(servedTimeController.search));
+
+app.get('/servedTime/delete/:id', async(req, res) => {
     try{
         const u = await servedTimeSchema.findByIdAndDelete(req.params.id);
         if(!u) res.status(404).send("No servedTime found!");

@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const servedTimeSchema = new mongoose.Schema({
-    IDRoom: {
-        type: Number,
-        required: true
+    idRoom: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "rooms"
     },
     startTime: {
         type: Date,
