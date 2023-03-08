@@ -18,6 +18,9 @@ app.get('/room/list', async(req, res) => {
     }
 });
 
+app.post('/room/list-by-building-name', 
+    asyncWrapper(roomController.listByBuildingName));
+
 app.get('/room/get/:id', async(req, res) => {
     try{
         const u = await roomSchema.findById(req.params.id);

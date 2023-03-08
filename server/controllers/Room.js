@@ -47,4 +47,17 @@ roomController.create = async (req, res, next) => {
     }
 }
 
+roomController.listByBuildingName = async (req, res, next) => {
+    try {
+        let rooms = await RoomModel.find().populate({ path: 'idBuilding', model: 'buildings'});
+        rooms = rooms.filter(item => item.idBuilding._id.toString() == req.body.buildingId);
+        return res.status(httpStatus.OK).json({rooms})
+    } catch (e) {
+        console.log(e)
+        return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+            message: e.message
+        });
+    }
+}
+
 module.exports = roomController;

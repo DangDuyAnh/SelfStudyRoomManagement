@@ -12,6 +12,7 @@ import WaitingRegister from './screens/WaitingRegister';
 import AddAcount from './screens/AddAcount';
 import ScheduleConfigue from './screens/DetailSchedule/ScheduleConfigue';
 import {PrivateRoute} from './components/private-route';
+import RegisterForm from './screens/RegisterForm';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/room-status' component={RoomStatus}/>
           <Route path='/waiting-register' component={WaitingRegister} />
           <Route path='/create-account' component={AddAcount}/>
+          <Route path='/register-form' component={RegisterForm}/>
         </Switch>
       </Router>
     </>

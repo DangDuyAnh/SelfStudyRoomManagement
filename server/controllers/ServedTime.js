@@ -2,6 +2,7 @@ const ServedTimeModel = require("../models/ServedTime");
 const BuildingModel = require("../models/Building")
 const RoomModel = require("../models/Room");
 const httpStatus = require("../utils/httpStatus");
+const { updateOne } = require("../models/Room");
 const servedTimeController = {};
 
 servedTimeController.get = async (req, res, next) => {
@@ -51,12 +52,7 @@ servedTimeController.search = async(req, res, next) => {
             date,
             idBuilding
         } = req.body
-        console.log("yeah")
-        let schedules = await ServedTimeModel.find().populate({
-            path: 'idRoom',
-            model: 'rooms',
-            populate: [{ path: 'idBuilding', model: 'buildings'}]
-        });
+        let schedules = await ServedTimeModel.find();
           
         schedules = schedules.filter(item => {
             d1 = new Date(date);
@@ -64,9 +60,30 @@ servedTimeController.search = async(req, res, next) => {
             d3 = new Date(item.endEffectiveDate);
             return (d1.getTime() >= d2.getTime()) && (d1.getTime() <= d3.getTime())  
         })
-        if (idRoom) schedules = schedules.filter(item => item.idRoom._id == idRoom);
-        if (idBuilding) schedules = schedules.filter(item => item.idRoom.idBuilding._id == idRoom);
-        return res.status(httpStatus.OK).json({schedules})
+
+        let rooms = await RoomModel.find().populate({ path: 'idBuilding', model: 'buildings'});
+
+        if (idRoom && (idRoom !== "")) rooms = rooms.filter(item => item._id.toString() == idRoom);
+        if (idBuilding && (idBuilding !== "")) {   
+            rooms = rooms.filter(item => {
+                return item.idBuilding._id.toString() == idBuilding});
+        }
+
+        let returnRoom = []
+        rooms.forEach((item, index) => {
+            let servedTime = []
+            schedules.forEach(i => {
+                if (i.idRoom.toString() == item._id.toString())
+                {   
+                    servedTime.push(i)
+                }
+            })
+            returnRoom.push({
+                room: item,
+                serveTime : servedTime   
+                });
+        })
+        return res.status(httpStatus.OK).send(returnRoom)
     } catch (e) {
         console.log(e)
         return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({

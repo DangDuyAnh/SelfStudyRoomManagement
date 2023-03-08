@@ -1,49 +1,46 @@
 const mongoose = require("mongoose");
 
 const registerFormSchema = new mongoose.Schema({
-    IDForm: {
-        type: Number,
-        required: true
+    idStudent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "students"
     },
-    IDStudent: {
-        type: Number,
-        required: true
-    },
-    IDRoomRegister: {
-        type: Number,
-        required: true
-    },
-    timeCreateRegister: {
-        type: Date,
+    idManager: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "managers",
         required: false
-    },
+    }, 
+    // Phòng học nhóm/Phòng cá nhân
     typeRoom: {
         type: String,
         required: false
     },
-    suggestRoom: {
-        type: Number,
+    //Ngày sinh viên sử dụng phòng
+    dateRegister: {
+        type: Date,
         required: false
     },
-    timeUse: {
+    startTime: {
         type: Date,
+        required: false
+    },
+    endTime: {
+        type: Date,
+        required: false
+    },
+    numberSeats: {
+        type: Number,
         required: false
     },
     message: {
         type: String,
         required: false
     },
-    IDManager: {
-        type: Number,
-        required: false
-    },
     status: {
-        type: String,
-        required: false
-    },
-    timeRequest: {
-        type: Date,
+        type: Number,
         required: false
     }
 });
+
+registerFormSchema.set('timestamps', true);
 module.exports = mongoose.model('RegisterForm', registerFormSchema);
