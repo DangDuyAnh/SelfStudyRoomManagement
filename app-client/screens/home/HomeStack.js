@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './Home';
 import RegisterRoom from './RegisterRoom';
 import QRScan from './QR';
+import HistoryRegister from './HistoryRegister';
 import StatusRoom from './StatusRoom';
 const Stack = createNativeStackNavigator();
 export default function HomeStack () {
@@ -36,6 +37,14 @@ export default function HomeStack () {
                 component={StatusRoom}
                 options={{ 
                     title: "Xem tình trạng phòng", 
+                    headerTintColor: 'white', 
+                    headerStyle: { backgroundColor: 'red' }  }}
+                />
+            <Stack.Screen
+                name="HistoryRegister"
+                component={HistoryRegister}
+                options={{ 
+                    title: "Xem lịch sử đăng ký phòng", 
                     headerTintColor: 'white', 
                     headerStyle: { backgroundColor: 'red' }  }}
                 />
