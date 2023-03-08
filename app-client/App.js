@@ -5,12 +5,12 @@ import { Navigator } from "./navigations/Navigator";
 import { Provider } from "react-redux";
 import { store } from "./redux/store/store";
 
-import StatusRoom from "./screens/home/StatusRoom";
+import HistoryRegister from "./screens/home/HistoryRegister";
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  // return <StatusRoom/>
+  // return <HistoryRegister/>
   
    return <Provider store={store}>{<Navigator />}</Provider>;
 }

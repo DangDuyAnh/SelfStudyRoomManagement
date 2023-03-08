@@ -1,10 +1,17 @@
 const express = require("express");
 const studentSchema = require('../models/Student')
 const app = express();
+const {asyncWrapper} = require("../utils/asyncWrapper");
+const studentController = require("../controllers/Student");
+
+app.post(
+    "/student/login",
+    asyncWrapper(studentController.login)
+);
+
 
 app.post('/student/create', async(req, res) => {
     const u = new studentSchema(req.body);
-    console.log(req.body);
     try{
         await u.save();
         res.send(u);

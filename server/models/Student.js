@@ -1,18 +1,18 @@
 const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
-    ID: {
-        type: Number,
-        required: true
-    },
-    password: {
-        type: String,
-        required: false
-    },
     studentCode: {
         type: Number,
         required: false
     },
+    password: {
+        type: String,
+        required: false
+    },   
+    phone: {
+        type: String,
+        required: false
+    },  
     email: {
         type: String,
         required: false
@@ -21,7 +21,7 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    gender: {
+    birthday: {
         type: String,
         required: false
     },
@@ -33,7 +33,7 @@ const studentSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    schoolYear: {
+    department: {
         type: String,
         required: false
     }

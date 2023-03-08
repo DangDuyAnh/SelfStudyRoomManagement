@@ -20,7 +20,7 @@ export default function LoginScreen({ navigation }) {
 
 
   const [account, setAccount] = useState({
-    phoneNumber: '1',
+    studentCode: '',
     password: ''
   })
   const changeAccount = useCallback((key)=> {
@@ -53,7 +53,7 @@ export default function LoginScreen({ navigation }) {
             </View>
             <View style={styles.inputContainer}>
               
-              <InputField placeholder="Mã số sinh viên" keyName="phoneNumber" val={account.phoneNumber} onChangeVal={changeAccount}/>
+              <InputField placeholder="Mã số sinh viên" keyName="studentCode" val={account.studentCode} onChangeVal={changeAccount} numeric={true}/>
   
               <InputField
                 placeholder="Mật khẩu"

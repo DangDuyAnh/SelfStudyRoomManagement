@@ -33,16 +33,14 @@ export default function Home({navigation}) {
         </TouchableOpacity>
       </View>
       <View style={styles.button3Row}>
-        <TouchableOpacity style={styles.button3}>
+        <TouchableOpacity style={styles.button3} onPress={() => {
+            navigation.navigate("HistoryRegister")
+          }}>
           <MaterialIcons name="history" resizeMode="contain"
             style={styles.image} size={65} color="red" />
 
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2}>
-          <AntDesign name="calculator" resizeMode="contain"
-            style={styles.image2} size={65} color="red" />
-
-        </TouchableOpacity>
+        
       </View>
       <View style={styles.image6Row}>
         <Image
@@ -59,12 +57,9 @@ export default function Home({navigation}) {
         <Text style={styles.xemTinhTrạng}>Xem tình trạng</Text>
       </View>
       <View style={styles.rect1}>
-
-
       </View>
       <View style={styles.lịchSửDangKyRow}>
         <Text style={styles.lịchSửDangKy}>Lịch sử đăng ký</Text>
-        <Text style={styles.gfgfd}>Phòng đăng ký hôm nay</Text>
       </View>
     </View>
   );

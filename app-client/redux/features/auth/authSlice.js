@@ -1,38 +1,34 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosClient from '../../../utils/axiosClient'
-import { loginMessage } from '../../../utils/message/responseMessage'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const initialState = {
-    data:{},
-    loading: false,
-    error: {}, 
-    code: '',
+    studentCode: '',
     userToken: null
 }
 
-export const  login =  createAsyncThunk('auth/login', async (params, thunkAPI) => {
+export const login =  createAsyncThunk('/student/login', async (params, thunkAPI) => {
     
   
     const newParams = {
-        phonenumber: params.phoneNumber,
+        studentCode: params.studentCode,
         password: params.password
     }
-    const userToken = "12345"
     try {
-        
-        await AsyncStorage.setItem('userToken', userToken)
-        // const res = await axiosClient('post', '/auth/login', {}, newParams)
+        const res = await axiosClient('post', '/student/login', newParams)
+        if (res.status ==200){
+        await AsyncStorage.setItem('userToken', res.data._id)
+        }
         // return res
-        return userToken
+        return res.data
     } catch(error) {
         return thunkAPI.rejectWithValue(error.response.data)
     } 
 })
 
-export const signup = createAsyncThunk('auth/signup', async (params, thunkAPI) => {
-    const res = await axiosClient('post', '/auth/signup', params=params)
+export const signup = createAsyncThunk('/student/create', async (params, thunkAPI) => {
+    const res = await axiosClient('post', '/student/create', params=params)
     return res
 })
 
@@ -41,12 +37,10 @@ const authSlice = createSlice({
     initialState: initialState,
     reducers: {
         LOGOUT: (state) => {
-            // console.log("state.userToken", state.userToken)
             AsyncStorage.removeItem("userToken")
             state.userToken = null
         },
         RETRIEVE_TOKEN: (state, action) => {
-            // console.log("action.payload.token", action.payload.token)
             state.userToken = action.payload.token
         }
     },
@@ -57,26 +51,12 @@ const authSlice = createSlice({
                 loading: true
             }
         }).addCase(login.rejected, (state, action) => {
-            console.log("rejected")
-            let newState = {...state}
-            newState.loading = false
-            newState.code = action.payload.code
-            if(action.payload.code == 1004){
-                if(action.payload.details == "phoneNumber") {
-                    newState.error = loginMessage.USER_INVALID
-                }
-                if(action.payload.details == "password") {
-                    newState.error = loginMessage.PASSWORD_INVALID
-                }
-            }
-            return newState
-        }).addCase(login.fulfilled, (state, action) => {
-            // state.loading = false
-            // state.message = action.payload.message
-            // state.code = action.payload.code
-            // state.data = action.payload.data
-            
-            state.userToken = action.payload
+            alert("MSSV hoặc password sai")
+        }).addCase(login.fulfilled, (state, action) => {          
+            state.userToken = action.payload._id
+
+            // initialState.studentCode = action.payload.studentCode
+            // console.log("initialState", initialState)
         })
     }
 })
