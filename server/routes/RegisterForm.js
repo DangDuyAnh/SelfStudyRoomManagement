@@ -50,7 +50,12 @@ app.get('/registerForm/get/:id', async(req, res) => {
     console.log("Ga")
     try{
         console.log("req.params.id", req.params.id)
-        const u = await registerFormSchema.findById(req.params.id);
+        const u = await registerFormSchema.findById(req.params.id).populate(
+            {
+                path: "idStudent",
+                model: "students"
+            }
+        );
         if(!u) res.status(404).send("No registerForm found!");
         res.send(u);
         res.status(200).send();
