@@ -11,40 +11,9 @@ function StatusRoom(props) {
   const [room, setRoom] = useState();
   const [status, setStatus] = useState();
   const [building, setBuilding] = useState();
-  const [dataRoom, setDataRoom] = useState([
-    {
-      id: 1,
-      data: '101',
-      current: 5,
-      max: 50
-    },
-    {
-      id: 2,
-      data: '206',
-      current: 15,
-      max: 30
-    },
-    {
-      id: 3,
-      data: '307',
-      current: 25,
-      max: 30
-    },
-    {
-      id: 4,
-      data: '405',
-      current: 15,
-      max: 50
-    },
-    {
-      id: 5,
-      data: '509',
-      current: 45,
-      max: 50
-    },
-  ]);
+  const [dataRoom, setDataRoom] = useState([]);
 
-  const GridView = ({ data, max, current }) => {
+  const GridView = ({ data, max, current, building }) => {
 
     if (current / max < 0.25) {
       return (
@@ -57,7 +26,7 @@ function StatusRoom(props) {
           justifyContent: 'center',
           alignItems: 'center'
         }}>
-          <Text style={styles.gridText} >{data}</Text>
+          <Text style={styles.gridText} >{building}-{data}</Text>
           <Text style={{ marginTop: 5 }}>{current}/{max}</Text>
         </View>
       );
@@ -104,11 +73,13 @@ function StatusRoom(props) {
   const getStatusRoom = async () => {
     const params = {
       "date": date,
-      "idBuilding": building,
+      "buildingName": building,
       "status": status
     }
-    const res = await axiosClient('post', '/room/status', params)
-
+    const res = await axiosClient('post', '/room/status-by-name', params)
+    if (res.status == 200){
+      setDataRoom(res.data)
+    }
     console.log("Res", res.data)
   }
   return (
@@ -193,7 +164,7 @@ function StatusRoom(props) {
       <View style={styles.rect5}>
         <FlatList
           data={dataRoom}
-          renderItem={({ item }) => <GridView data={item.data} current={item.current} max={item.max} />}
+          renderItem={({ item }) => <GridView data={item.room.name} current={item.sitting} max={item.room.numberSeats} building={item.room.idBuilding.name}/>}
           keyExtractor={item => item.id}
           numColumns={3}
           key={item => item.id}

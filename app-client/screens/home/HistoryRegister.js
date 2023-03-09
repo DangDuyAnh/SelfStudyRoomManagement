@@ -22,6 +22,7 @@ function HistoryRegister(props) {
         const res = await axiosClient('get', `/usingQRRoom/get/${id}`)
         console.log("Res", res)
         if (res.status == 200) {
+            console.log("res.data", res.data)
             return res.data
         }
 
@@ -82,9 +83,9 @@ function HistoryRegister(props) {
         <FlatList
             data={dataHistory}
             renderItem={({ item }) => <GridViewDate data={item} />}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item._id}
             // numColumns={3}
-            key={item => item.id}
+            key={item => item._id}
         />
     );
 }

@@ -16,15 +16,18 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import PlaceIcon from '@mui/icons-material/Place';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
-import {axiosGet, axiosPost} from "../utils/api" 
+import {axiosGet, axiosPost} from "../utils/api" ;
+import PersonIcon from '@mui/icons-material/Person';
+import DraftsIcon from '@mui/icons-material/Drafts';
 
 export default function RoomStatus() {
     const [value, setValue] = React.useState(new Date());
-    const [status, setStatus] = React.useState('Tất cả');
+    const [status, setStatus] = React.useState("Tất cả");
     const [buildings, setBuildings] = React.useState([{_id: "", name: "Tất cả"}]);
     const [rooms, setRooms] = React.useState([{_id: "", name: "Tất cả"}]);
     const [choosedIdBuilding, setChoosedIdBuilding] = React.useState();
     const [choosedIdRoom, setChoosedIdRoom] = React.useState();
+    const [roomCard, setRoomCard] = React.useState([])
 
     React.useEffect(() => {
         getData();
@@ -33,6 +36,7 @@ export default function RoomStatus() {
     const getData = async () => {
         const res = await axiosGet("/building/list");
         setBuildings([{_id: "", name: "Tất cả"}, ...res.data]);
+        handleSearch()
     }
 
     const handleChange = (event) => {
@@ -49,6 +53,17 @@ export default function RoomStatus() {
 
     const choosingRoom = (event, value) => {
         setChoosedIdRoom(value._id)
+    }
+
+    const handleSearch = async () => {
+        const res = await axiosPost("/room/status", {
+            date: value,
+            idRoom: choosedIdRoom,
+            idBuilding: choosedIdBuilding,
+            status: status
+        })
+        setRoomCard(res.data);
+        console.log(res.data);
     }
 
     return(
@@ -143,237 +158,116 @@ export default function RoomStatus() {
                                         onChange={handleChange}
                                         sx={{width: '100%'}}
                                         >
-                                        <MenuItem value={"Tất cả"}>Tất cả</MenuItem>
-                                        <MenuItem value={"little"}>Phòng vắng</MenuItem>
-                                        <MenuItem value={"normal"}>Trung bình</MenuItem>
-                                        <MenuItem value={"full"}>Phòng đầy</MenuItem>
+                                        <MenuItem value="Tất cả">Tất cả</MenuItem>
+                                        <MenuItem value="Phòng vắng">Phòng vắng</MenuItem>
+                                        <MenuItem value="Trung bình">Trung bình</MenuItem>
+                                        <MenuItem value="Phòng đầy">Phòng đầy</MenuItem>
                                     </Select>                                    
                                 </Box>
                                 </Grid>
 
                                 <Grid item xs={2.25}>
                                     <Box sx={{p: 2 }}>
-                                    <Button sx = {{width: '100%', mt: 3, height: '56px'}} variant="contained">Tìm kiếm</Button>
+                                    <Button sx = {{width: '100%', mt: 3, height: '56px'}} variant="contained" onClick={handleSearch}>Tìm kiếm</Button>
                                     </Box>
                                 </Grid>
                             </Grid>
                         </Paper>
 
                         <Grid container spacing={2} sx={{mt : 2}}>
-                            <Grid item xs={3}>
-                                <Paper sx={{padding: '8px'}}>
-                                    <Grid container>
-                                        <Grid item xs={3} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                            <Typography sx={{fontWeight: 'bold', fontSize: '18px'}}>201</Typography>
+                            {roomCard.map((item) => {
+                                return(
+                                    <Grid item xs={3}>
+                                    <Paper sx={{padding: '8px'}}>
+                                        <Grid container>
+                                            <Grid item xs={3} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                <Typography sx={{fontWeight: 'bold', fontSize: '18px'}}>{item.room.name}</Typography>
+                                            </Grid>
+                                            <Grid item xs={9}>
+                                                <div className='row-icon'>
+                                                    <div>
+                                                        <PlaceIcon style={{fontSize: '18px'}}/>
+                                                    </div>
+                                                    <p>Tòa {item.room.idBuilding.name} tầng {item.room.name}</p>
+                                                </div>  
+    
+                                                {item.room.typeRoom == "Phòng học nhóm"?
+                                                            <div className='row-icon'>
+                                                            <div>
+                                                                <PeopleAltIcon style={{fontSize: '20px'}}/>                                               
+                                                            </div>
+                                                            <p>Phòng học nhóm</p>
+                                                            </div>
+                                                            :
+                                                            <div className='row-icon'>
+                                                            <div>
+                                                                <PersonIcon style={{fontSize: '20px'}}/>                                               
+                                                            </div>
+                                                            <p>Phòng cá nhân</p>
+                                                            </div>
+                                                            }
+    
+                                                            {item.room.accessType == "Phòng tự do"?
+                                                            <div className='row-icon'>
+                                                            <div>
+                                                                <QrCodeIcon style={{fontSize: '20px'}}/>
+                                                            </div>
+                                                            <p>Phòng tự do</p>
+                                                            </div>
+                                                            :
+                                                            <div className='row-icon'>
+                                                            <div>
+                                                                <DraftsIcon style={{fontSize: '20px'}}/>
+                                                            </div>
+                                                            <p>Phòng cần đăng ký</p>
+                                                            </div>
+                                                            }
+    
+                                                {(item.status == "Phòng vắng")&&<div>
+                                                    <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
+                                                        <div class="progress-bar bg-success" role="progressbar" style={{width: `${item.sitting*100/item.room.numberSeats}%`}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+        
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <EventSeatIcon style={{fontSize: '20px', color: '#28A745'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600', color: '#28A745'}}>{item.sitting}/{item.room.numberSeats}</p>
+                                                    </div>  
+                                                </div>}   
+
+                                                {(item.status == "Bình thường")&&<div>
+                                                    <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
+                                                        <div class="progress-bar bg-warning" role="progressbar" style={{width: `${item.sitting*100/item.room.numberSeats}%`}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+        
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <EventSeatIcon style={{fontSize: '20px', color: '#FFC107'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600', color: '#FFC107'}}>{item.sitting}/{item.room.numberSeats}</p>
+                                                    </div>  
+                                                </div>}  
+
+                                                {(item.status == "Phòng đầy")&&<div>
+                                                    <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
+                                                        <div class="progress-bar bg-danger" role="progressbar" style={{width: `${item.sitting*100/item.room.numberSeats}%`}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+        
+                                                    <div className='row-icon'>
+                                                        <div>
+                                                            <EventSeatIcon style={{fontSize: '20px', color: '#DC3545'}}/>
+                                                        </div>
+                                                        <p style={{fontWeight: '600', color: '#DC3545'}}>{item.sitting}/{item.room.numberSeats}</p>
+                                                    </div>  
+                                                </div>}                                    
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={9}>
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PlaceIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Tòa D3 tầng 1</p>
-                                            </div>  
+                                    </Paper>
+                                </Grid>
+                                )
+                            })}
 
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PeopleAltIcon style={{fontSize: '18px'}}/>                                               
-                                                </div>
-                                                <p>Phòng cá nhân</p>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <QrCodeIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Phòng tự do</p>
-                                            </div>
-
-                                            <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
-                                                <div class="progress-bar bg-success" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <EventSeatIcon style={{fontSize: '20px', color: '#28A745'}}/>
-                                                </div>
-                                                <p style={{fontWeight: '600', color: '#28A745'}}>5/30</p>
-                                            </div>                                          
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
-
-                            <Grid item xs={3}>
-                                <Paper sx={{padding: '8px'}}>
-                                    <Grid container>
-                                        <Grid item xs={3} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                            <Typography sx={{fontWeight: 'bold', fontSize: '18px'}}>201</Typography>
-                                        </Grid>
-                                        <Grid item xs={9}>
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PlaceIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Tòa D3 tầng 1</p>
-                                            </div>  
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PeopleAltIcon style={{fontSize: '18px'}}/>                                               
-                                                </div>
-                                                <p>Phòng cá nhân</p>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <QrCodeIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Phòng tự do</p>
-                                            </div>
-
-                                            <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
-                                                <div class="progress-bar bg-warning" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <EventSeatIcon style={{fontSize: '20px', color: '#FFC107'}}/>
-                                                </div>
-                                                <p style={{fontWeight: '600', color: '#FFC107'}}>5/30</p>
-                                            </div>                                          
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
-                            
-                            <Grid item xs={3}>
-                                <Paper sx={{padding: '8px'}}>
-                                    <Grid container>
-                                        <Grid item xs={3} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                            <Typography sx={{fontWeight: 'bold', fontSize: '18px'}}>201</Typography>
-                                        </Grid>
-                                        <Grid item xs={9}>
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PlaceIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Tòa D3 tầng 1</p>
-                                            </div>  
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PeopleAltIcon style={{fontSize: '18px'}}/>                                               
-                                                </div>
-                                                <p>Phòng cá nhân</p>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <QrCodeIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Phòng tự do</p>
-                                            </div>
-
-                                            <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
-                                                <div class="progress-bar bg-danger" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <EventSeatIcon style={{fontSize: '20px', color: '#DC3545'}}/>
-                                                </div>
-                                                <p style={{fontWeight: '600', color: '#DC3545'}}>5/30</p>
-                                            </div>                                          
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
-
-                            <Grid item xs={3}>
-                                <Paper sx={{padding: '8px'}}>
-                                    <Grid container>
-                                        <Grid item xs={3} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                            <Typography sx={{fontWeight: 'bold', fontSize: '18px'}}>201</Typography>
-                                        </Grid>
-                                        <Grid item xs={9}>
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PlaceIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Tòa D3 tầng 1</p>
-                                            </div>  
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PeopleAltIcon style={{fontSize: '18px'}}/>                                               
-                                                </div>
-                                                <p>Phòng cá nhân</p>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <QrCodeIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Phòng tự do</p>
-                                            </div>
-
-                                            <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
-                                                <div class="progress-bar bg-danger" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <EventSeatIcon style={{fontSize: '20px', color: '#DC3545'}}/>
-                                                </div>
-                                                <p style={{fontWeight: '600', color: '#DC3545'}}>5/30</p>
-                                            </div>                                          
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
-
-                            <Grid item xs={3}>
-                                <Paper sx={{padding: '8px'}}>
-                                    <Grid container>
-                                        <Grid item xs={3} sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                            <Typography sx={{fontWeight: 'bold', fontSize: '18px'}}>201</Typography>
-                                        </Grid>
-                                        <Grid item xs={9}>
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PlaceIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Tòa D3 tầng 1</p>
-                                            </div>  
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <PeopleAltIcon style={{fontSize: '18px'}}/>                                               
-                                                </div>
-                                                <p>Phòng cá nhân</p>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <QrCodeIcon style={{fontSize: '18px'}}/>
-                                                </div>
-                                                <p>Phòng tự do</p>
-                                            </div>
-
-                                            <div class="progress" style={{height: '4px',marginTop: '20px', marginBottom: '5px'}}>
-                                                <div class="progress-bar bg-danger" role="progressbar" style={{width: '25%'}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-
-                                            <div className='row-icon'>
-                                                <div>
-                                                    <EventSeatIcon style={{fontSize: '20px', color: '#DC3545'}}/>
-                                                </div>
-                                                <p style={{fontWeight: '600', color: '#DC3545'}}>5/30</p>
-                                            </div>                                          
-                                        </Grid>
-                                    </Grid>
-                                </Paper>
-                            </Grid>
                         </Grid>
                     </div>
                 </div>
