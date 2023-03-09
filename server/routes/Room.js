@@ -29,6 +29,9 @@ app.post("/room/status-by-name",
     asyncWrapper(roomController.statusByName)
 );
 
+app.post("/room/status-for-rf",
+asyncWrapper(roomController.statusForRF))
+
 app.get('/room/get/:id', async(req, res) => {
     try{
         const u = await roomSchema.findById(req.params.id).populate({

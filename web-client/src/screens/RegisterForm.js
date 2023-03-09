@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import {axiosGet, axiosPost} from "../utils/api" ;
 
 export default function RegisterForm(props){
+    const [selectedValue, setSelectedValue] = React.useState("a");
     const [form, setForm] = React.useState({});
     const getData = async () => {
         let res = await axiosGet("/registerForm/get/" + props.match.params.id)
@@ -69,6 +70,10 @@ export default function RegisterForm(props){
         }
     ];
 
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+      };
+
     return(
         <div className="wrapper">
             <Navbar />
@@ -118,23 +123,23 @@ export default function RegisterForm(props){
                                     <div style={{display: 'flex'}}>
                                         <div style={{width: "600px", display: "flex"}}>
                                             <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Giờ bắt đầu: </p>
-                                            <p className="booking-pay-line">Nguyễn Văn A </p>
+                                            <p className="booking-pay-line">{TimeToString(form.startTime)}</p>
                                         </div>
                                         <div style={{display: "flex"}}>
                                             <p className="booking-pay-line" style={{fontWeight:'500'}}>Giờ kết thúc:&nbsp;</p>
-                                            <p className="booking-pay-line">20183471 </p>
+                                            <p className="booking-pay-line">{TimeToString(form.endTime)}</p>
                                         </div>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Số chỗ ngồi đăng ký: </p>
-                                        <p className="booking-pay-line">10</p>
+                                        <p className="booking-pay-line">{form.numberSeats}</p>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <div>
                                             <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Ghi chú: </p>
                                         </div>
                                         <div style={{textAlign: "justify"}}>
-                                            <p className="booking-pay-line">Phòng học nhóm</p>
+                                            <p className="booking-pay-line">{form.message}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -150,7 +155,9 @@ export default function RegisterForm(props){
                                 <Box sx={{mt: 2}}>
                                     <Box sx={{display: "flex"}}>
                                         <Box sx={{display: "flex", alignItems: "center", height: ''}}>
-                                            <Radio size="small" sx={{mr: 2}}/>
+                                            <Radio size="small" sx={{mr: 2}}        checked={selectedValue === 'a'}
+        onChange={handleChange}
+        value="a"/>
                                             <Typography>Phòng học đề xuất: </Typography>
                                         </Box>
                                         <Box sx={{ml: 3, marginTop : "7px"}}>
@@ -178,7 +185,9 @@ export default function RegisterForm(props){
                                 <Box sx={{mt: 2}}>
                                     <Box sx={{display: "flex", alignItems: "center"}}>
                                         <Box sx={{display: "flex", alignItems: "center", width: "195px"}}>
-                                            <Radio size="small" sx={{mr: 2}}/>
+                                            <Radio size="small" sx={{mr: 2}}         checked={selectedValue === 'b'}
+        onChange={handleChange}
+        value="b"/>
                                             <Typography>Phòng học khác: </Typography>
                                         </Box>
                                         <Box sx={{ml: 3, marginTop : "7px"}}>
