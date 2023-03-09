@@ -126,7 +126,7 @@ roomController.status = async (req, res, next) => {
                 if (i.assignedRoom) {
                 if (i.assignedRoom.toString() == item._id.toString())
                 {   
-                    sitting = sitting + 1
+                    sitting = sitting + i.numberSeats
                 }
             }
             })
@@ -162,7 +162,8 @@ roomController.statusForRF = async (req, res, next) => {
         const {
             date,
             startTime,
-            endTime
+            endTime,
+            typeRoom
         } = req.body
 
         let schedules = await ServedTimeModel.find();
@@ -178,7 +179,7 @@ roomController.statusForRF = async (req, res, next) => {
             return (d1.getTime() >= d2.getTime()) && (d1.getTime() <= d3.getTime()) && (compareTimeOnlyBigger(t1, t3))  && (compareTimeOnlySmaller(t2, t4))   
         })
         
-        let rooms = await RoomModel.find().populate({ path: 'idBuilding', model: 'buildings'});
+        let rooms = await RoomModel.find({typeRoom: typeRoom}).populate({ path: 'idBuilding', model: 'buildings'});
         let registerForm = await RegisterFormModel.find();
         registerForm = registerForm.filter(item => {
             if (!item.status) return false
@@ -211,7 +212,7 @@ roomController.statusForRF = async (req, res, next) => {
                     if (i.assignedRoom) {
                     if (i.assignedRoom.toString() == item._id.toString())
                     {   
-                        sitting = sitting + 1
+                        sitting = sitting + i.numberSeats
                     }
                 }
                 })
@@ -290,7 +291,7 @@ roomController.statusByName = async (req, res, next) => {
                 if (i.assignedRoom) {
                 if (i.assignedRoom.toString() == item._id.toString())
                 {   
-                    sitting = sitting + 1
+                    sitting = sitting + i.numberSeats
                 }
             }
             })

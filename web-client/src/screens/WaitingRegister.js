@@ -454,7 +454,7 @@ export default function WaitingRegister(props) {
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Đơn đăng ký"/>
 
             <div className="content-wrapper">
                 <div className="content-header">

@@ -28,6 +28,12 @@ export default function CreateRoom(props) {
             numberAirCondition: parseInt(numberAirCondition),
             numberPowerOutlet: parseInt(numberPowerOutlet)
         })
+
+        if (parseInt(floor) > building.numberFloor) {
+            await axiosPost("/building/update/" + props.match.params.id, {
+                numberFloor: parseInt(floor)
+            })
+        }
         window.location = "/building/" + props.match.params.id
         } catch(e) {
             setErrorName(true)
@@ -50,7 +56,7 @@ export default function CreateRoom(props) {
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Thiết lập"/>
 
             <div className="content-wrapper">
                 <div className="content-header">
@@ -62,8 +68,7 @@ export default function CreateRoom(props) {
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
                                 <li className="breadcrumb-item">Thiết lập</li>
-                                <li className="breadcrumb-item">Chi tiết</li>
-                                <li className="breadcrumb-item active"><a href="#">D3</a></li>
+                                <li className="breadcrumb-item active"><a href={"/building/" + building._id} >{building.name}</a></li>
                                 <li className="breadcrumb-item active"><a href="#">Tạo phòng mới</a></li>
                                 </ol>
                             </div>

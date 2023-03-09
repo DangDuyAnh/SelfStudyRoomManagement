@@ -69,7 +69,7 @@ export default function RoomStatus() {
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Tình trạng phòng"/>
 
             <div className="content-wrapper">
                 <div className="content-header">

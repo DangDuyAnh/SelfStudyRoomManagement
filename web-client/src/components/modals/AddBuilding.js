@@ -43,7 +43,7 @@ export default function AddBuilding(){
               address: address
             })
             if (res.status == 201) {
-              window.location = '/detail'
+              window.location = '/'
             } else {
               setNameErr({
                 status: true,

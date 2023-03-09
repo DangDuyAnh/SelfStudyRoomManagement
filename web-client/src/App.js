@@ -24,10 +24,13 @@ function App() {
           <Route path='/building/:id' component={DetailBuilding}/>
           <Route path='/create-room/:id' component={CreateRoom}/>
           <Route path='/detail-room/:id' component={DetailRoom} />
+
           <Route path='/service-schedule' component={ServiceSchedule} />
-          <Route path='/detail-schedule' component={DetailSchedule} />
+          <Route path='/detail-schedule/:id' component={DetailSchedule} />
           <Route path='/schedule-configue/:id' component={ScheduleConfigue} />
+          
           <Route path='/room-status' component={RoomStatus}/>
+
           <Route path='/waiting-register' component={WaitingRegister} />
           <Route path='/create-account' component={AddAcount}/>
           <Route path='/register-form/:id' component={RegisterForm}/>

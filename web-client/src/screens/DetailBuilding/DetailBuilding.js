@@ -26,13 +26,13 @@ export default function DetailBuilding(props) {
             setBuilding(building);
             let allRooms = res.data.rooms;
 
-            let QRRoom = allRooms.filter(item => item.accessType == 'qrcode')
+            let QRRoom = allRooms.filter(item => item.accessType == 'Phòng tự do')
             let PersonalQRRoom = QRRoom.filter(item => item.typeRoom == 'Phòng cá nhân');
             setNQRRoom(QRRoom.length)
             setNPersonalQRRoom(PersonalQRRoom.length)
 
-            let ReRoom = allRooms.filter(item => item.accessType == 'register')
-            let PersonalReRoom = QRRoom.filter(item => item.typeRoom == 'Phòng cá nhân');
+            let ReRoom = allRooms.filter(item => item.accessType == 'Phòng đăng ký')
+            let PersonalReRoom = ReRoom.filter(item => item.typeRoom == 'Phòng cá nhân');
             setNReRoom(ReRoom.length)
             setNPersonalReRoom(PersonalReRoom.length)
 
@@ -49,7 +49,7 @@ export default function DetailBuilding(props) {
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Thiết lập"/>
 
             <div className="content-wrapper">
                 <div className="content-header">
@@ -61,7 +61,6 @@ export default function DetailBuilding(props) {
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
                                 <li className="breadcrumb-item">Thiết lập</li>
-                                <li className="breadcrumb-item">Chi tiết</li>
                                 <li className="breadcrumb-item active"><a href="#">{building.name}</a></li>
                                 </ol>
                             </div>
@@ -96,7 +95,7 @@ export default function DetailBuilding(props) {
                                         <div className='rooms'>
                                             {item.map((i) => {
                                                 return(
-                                                    <div className='card my-card text-center '>
+                                                    <div className='card my-card text-center' onClick={() => {window.location = "/detail-room/" + i._id}}>
                                                         <div className='card-header'>
                                                             <h3 style={{margin: 0, padding: 0, fontSize: '16px', fontWeight: '600'}}>{i.name}</h3>
                                                         </div>

@@ -14,7 +14,7 @@ export default function DetailSchedule(){
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Lịch phục vụ"/>
 
             <div className="content-wrapper">
                 <div className="content-header">

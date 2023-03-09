@@ -20,7 +20,7 @@ export default function DetailRoom(props){
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Thiết lập"/>
 
             <div className="content-wrapper">
                 <div className="content-header">
@@ -32,8 +32,7 @@ export default function DetailRoom(props){
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
                                 <li className="breadcrumb-item">Thiết lập</li>
-                                <li className="breadcrumb-item">Chi tiết</li>
-                                <li className="breadcrumb-item active"><a href="#">{room.idBuilding.name}</a></li>
+                                <li className="breadcrumb-item active"><a href={"/building/" + room.idBuilding._id}>{room.idBuilding.name}</a></li>
                                 <li className="breadcrumb-item active"><a href="#">{room.name}</a></li>
                                 </ol>
                             </div>

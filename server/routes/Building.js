@@ -35,10 +35,11 @@ app.get('/building/get/:id', async(req, res) => {
     }
 });
 
-app.patch('/building/update/:id', async(req, res) => {
+app.post('/building/update/:id', async(req, res) => {
     try{
-        await buildingSchema.findByIdAndUpdate(req.params.id,req.body);
-        await buildingSchema.save()
+        let u = await buildingSchema.findByIdAndUpdate(req.params.id,req.body);
+        await u.save()
+        res.send(u);
         
     }catch (error){
         res.status(500).send(error);

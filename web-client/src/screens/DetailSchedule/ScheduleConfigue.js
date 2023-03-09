@@ -198,7 +198,7 @@ export default function ScheduleConfigue(props){
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Lịch phục vụ"/>
 
             <BootstrapDialog
                 onClose={handleClose1}
@@ -459,7 +459,7 @@ export default function ScheduleConfigue(props){
                             <div className="col-sm-6">
                                 <ol className="breadcrumb float-sm-right">
                                 <li className="breadcrumb-item">Lịch phục vụ</li>
-                                <li className="breadcrumb-item"><a href='#'>Chung</a></li>
+                                <li className="breadcrumb-item"><a href='/service-schedule'>Chung</a></li>
                                 {room.idBuilding&&<li className="breadcrumb-item active"><a href="#">{room.idBuilding.name} - {room.name}</a></li>}
                                 </ol>
                             </div>

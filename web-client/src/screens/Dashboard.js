@@ -25,7 +25,7 @@ export default function Dashboard() {
     return (
     <div className="wrapper">
         <Navbar />
-        <Sidebar />
+        <Sidebar focus="Thiết lập"/>
         <AddBuilding />
 
         <div className="content-wrapper">
@@ -37,7 +37,7 @@ export default function Dashboard() {
                         </div>
                         <div className="col-sm-6">
                             <ol className="breadcrumb float-sm-right">
-                            <li className="breadcrumb-item"><a href="#">Thiết lập</a></li>
+                            <li className="breadcrumb-item">Thiết lập</li>
                             <li className="breadcrumb-item active">Chung</li>
                             </ol>
                         </div>
@@ -56,10 +56,8 @@ export default function Dashboard() {
                                 <div class="card-body">
                                     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
                                         <div>
-                                            <p style={{fontSize: '24px', fontWeight: '600'}}>Tòa D3</p>
-                                            <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Địa chỉ: </span>Temp</p>
-                                            <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số tầng: </span>Temp</p>
-                                            <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Số phòng tự học: </span>Temp</p>
+                                            <p style={{fontSize: '24px', fontWeight: '600'}}>Tòa {item.name}</p>
+                                            <p style={{margin: 0, padding: 0}}><span style={{fontWeight: '500'}}>Địa chỉ: </span>{item.address}</p>
                                         </div>
                                         <Stack direction="row">
                                         <IconButton aria-label="Edit" title="Edit" color="primary">

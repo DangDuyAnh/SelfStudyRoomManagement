@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-
+import React, { Component, useEffect } from 'react';
+import { axiosGet } from '../utils/api.js';
 import Logo from "../assets/logo.png";
+import { authenticationService } from '../utils/authenticationService.js';
 
-export default class Sidebar extends Component {
-  render() {
+export default function Sidebar(props){
+
     return (
+      <div>
         <aside className="main-sidebar sidebar-dark-primary elevation-4">
         <a href="index3.html" className="brand-link">
           <div style={{height: "50px", display: 'flex', alignItems: 'center'}}>
@@ -33,154 +35,61 @@ export default class Sidebar extends Component {
               <li className="nav-header">QUẢN LÝ THÔNG TIN PHÒNG</li>
               
               <li className="nav-item menu-open">
-                <a href="#" className="nav-link active">
+                <a href="/" className={(props.focus == "Thiết lập")?"nav-link active":"nav-link"}>
                   <i className="fas fa-building nav-icon"></i>
                   <p>
-                    Thiết lập 
-                    <i className="right fas fa-angle-left" />
+                    Thiết lập chung
                   </p>
                 </a>
-                <ul className="nav nav-treeview">
-                  <li className="nav-item">
-                    <a href="/" className="nav-link active">
-                      <i className="far fa-circle nav-icon" />
-                      <p>Chung</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="#" className="nav-link">
-                      <i className="far fa-circle nav-icon" />
-                      <p>
-                        Chi tiết
-                        <i className="right fas fa-angle-left" />
-                      </p>
-                    </a>
-                    <ul className="nav nav-treeview">
-                      <li className="nav-item">
-                        <a href="#" className="nav-link">
-                          <i className="far fa-dot-circle nav-icon" />
-                          <p>D3</p>
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a href="#" className="nav-link">
-                          <i className="far fa-dot-circle nav-icon" />
-                          <p>D5</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
               </li>
 
               <li className="nav-header">QUẢN LÝ SỬ DỤNG PHÒNG</li>
               <li className="nav-item">
-                <a href="#" className="nav-link">
+                <a href="/room-status" className={(props.focus == "Tình trạng phòng")?"nav-link active":"nav-link"}>
                   <i className="fas fa-building-user nav-icon"/>
                   <p>
                     Tình trạng phòng 
-                    <i className="right fas fa-angle-left" />
                   </p>
-                </a>
-                <ul className="nav nav-treeview">
-                  <li className="nav-item">
-                    <a href="#" className="nav-link active">
-                      <i className="far fa-circle nav-icon" />
-                      <p>Chung</p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="#" className="nav-link">
-                      <i className="far fa-circle nav-icon" />
-                      <p>
-                        Chi tiết
-                        <i className="right fas fa-angle-left" />
-                      </p>
-                    </a>
-                    <ul className="nav nav-treeview">
-                      <li className="nav-item">
-                        <a href="#" className="nav-link">
-                          <i className="far fa-dot-circle nav-icon" />
-                          <p>D3</p>
-                        </a>
-                      </li>
-                      <li className="nav-item">
-                        <a href="#" className="nav-link">
-                          <i className="far fa-dot-circle nav-icon" />
-                          <p>D5</p>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="nav-item">
-                    <a href="#" className="nav-link">
-                    <i className="nav-icon fas fa-search" />
-                      <p>Tìm kiếm</p>
-                    </a>
-                  </li>                  
-                </ul>                
+                </a>             
               </li>
 
               <li className="nav-item">
-                <a href="/service-schedule" className="nav-link">
+                <a href="/service-schedule" className={(props.focus == "Lịch phục vụ")?"nav-link active":"nav-link"}>
                 <i className="nav-icon far fa-calendar-alt" />
                   <p>
                     Lịch phục vụ
-                    <i className="right fas fa-angle-left" />
                   </p>
                 </a>
               </li>
               
               <li className="nav-item">
-                <a href="#" className="nav-link">
+                <a href="/waiting-register" className={(props.focus == "Đơn đăng ký")?"nav-link active":"nav-link"}>
                 <i className="nav-icon far fa-envelope" />
                   <p>
                     Đơn đăng ký
-                    <i className="fas fa-angle-left right" />
-                    <span className="right badge badge-danger">New</span>
                   </p>
                 </a>
-                <ul className="nav nav-treeview">
-                  <li className="nav-item">
-                    <a href="#" className="nav-link active">
-                      <i className="far fa-circle nav-icon" />
-                      <p>Đang chờ duyệt
-                      <span className="badge badge-info right">2</span>
-                      </p>
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a href="#" className="nav-link">
-                      <i className="far fa-circle nav-icon" />
-                      <p>Đã duyệt</p>
-                    </a>
-                  </li>
-                </ul>
+
               </li>
 
+              {authenticationService.getUser().role=="admin"&&
+              <>
               <li className="nav-header">QUẢN LÝ NGƯỜI DÙNG</li>
 
               <li className="nav-item">
-                <a href="pages/gallery.html" className="nav-link">
-                <i class="fa-solid fa-users nav-icon" style={{fontSize: '14px'}}></i>
-                  <p>
-                    Danh sách người dùng
-                  </p>
-                </a>
-              </li>
-
-              <li className="nav-item">
-                <a href="pages/gallery.html" className="nav-link">
+                <a href="/create-account" className={(props.focus == "Người dùng")?"nav-link active":"nav-link"}>
                 <i class="fa-solid fa-user-plus nav-icon" style={{fontSize: '14px'}}></i>
                   <p>
                     Thêm người dùng
                   </p>
                 </a>
               </li>
+              </>
+              }
             </ul>
           </nav>
         </div>
       </aside>
+    </div>
     )
-  }
 }

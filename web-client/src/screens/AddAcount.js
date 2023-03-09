@@ -47,7 +47,7 @@ export default function AddAcount() {
     return(
         <div className="wrapper">
         <Navbar />
-        <Sidebar />
+        <Sidebar focus="Người dùng"/>
 
         <Snackbar open={success} autoHideDuration={2000} onClose={() => {setSuccess(false)}}
                 anchorOrigin={{ vertical, horizontal }} key={vertical + horizontal}>

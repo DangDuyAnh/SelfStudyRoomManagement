@@ -42,39 +42,15 @@ export default function Navbar(){
           <li className="nav-item dropdown">
             <a className="nav-link" data-toggle="dropdown" href="#">
               <i className="far fa-bell" style={{fontSize: '24px', color: 'black'}}/>
-              <span className="badge badge-warning navbar-badge" style={{color: "black"}}>15</span>
             </a>
-            <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-              <span className="dropdown-item dropdown-header">15 Notifications</span>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
-                <i className="fas fa-envelope mr-2" /> 4 new messages
-                <span className="float-right text-muted text-sm">3 mins</span>
-              </a>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
-                <i className="fas fa-users mr-2" /> 8 friend requests
-                <span className="float-right text-muted text-sm">12 hours</span>
-              </a>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item">
-                <i className="fas fa-file mr-2" /> 3 new reports
-                <span className="float-right text-muted text-sm">2 days</span>
-              </a>
-              <div className="dropdown-divider" />
-              <a href="#" className="dropdown-item dropdown-footer">See All Notifications</a>
-            </div>
           </li>
 
           <li className="nav-item dropdown">
-            {/* <div style={{display: "flex", alignItems: "center", height: "100%"}}>
-                <img onClick={handleClick} src={DefaultAvatar} style={{width: "40px", height: "40px", borderRadius: "50%", cursor: 'pointer', margin: "0px 10px 0px 20px"}}/>
-            </div> */}
               <Tooltip title="Account settings">
                 <IconButton
                   onClick={handleClick}
                   size="small"
-                  sx={{ ml: 2 }}
+                  sx={{ ml: 1 }}
                   aria-controls={open ? 'account-menu' : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}

@@ -68,7 +68,7 @@ export default function ServiceSchedule() {
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Lịch phục vụ"/>
 
             <div className="content-wrapper">
                 <div className="content-header">
@@ -172,7 +172,7 @@ export default function ServiceSchedule() {
                                                             </div>
                                                     }
 
-                                                    {item.room.accessType == "qrcode"?
+                                                    {item.room.accessType == "Phòng tự do"?
                                                             <div className='row-icon'>
                                                             <div>
                                                                 <QrCodeIcon style={{fontSize: '20px', color: '#1976d2'}}/>
@@ -184,7 +184,7 @@ export default function ServiceSchedule() {
                                                             <div>
                                                                 <DraftsIcon style={{fontSize: '20px', color: '#1976d2'}}/>
                                                             </div>
-                                                            <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng cần đăng ký</p>
+                                                            <p style={{fontWeight: '600', color: '#1976d2'}}>Phòng đăng ký</p>
                                                             </div>
                                                             }
                                                     <div style={{height: '1px', width: '100%', backgroundColor: '#bdbdbd', margin: '15px 0px 0px 0px'}}></div>
@@ -209,7 +209,7 @@ export default function ServiceSchedule() {
                                         </div>
 
                                         <div className='more-info'>
-                                            <a href="#" class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
+                                            <a href={"/schedule-configue/" + item.room._id} class="small-box-footer" style={{color: 'black'}}>More info <i class="fas fa-arrow-circle-right"></i></a>
                                         </div>
                                     </div>
                                 </div>                                        
