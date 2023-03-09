@@ -198,7 +198,7 @@ export default function ScheduleConfigue(props){
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar focus="Lịch phục vụ"/>
+            <Sidebar focus="Lịch phục vụ" focusSmall="Lịch phục vụ"/>
 
             <BootstrapDialog
                 onClose={handleClose1}

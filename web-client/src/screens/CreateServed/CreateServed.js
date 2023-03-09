@@ -40,7 +40,7 @@ export default function CreateServed(props) {
     return(
         <div className="wrapper">
             <Navbar />
-            <Sidebar />
+            <Sidebar focus="Lịch phục vụ" focusSmall = "Lịch phục vụ2"/>
 
             <div className="content-wrapper">
                 <div className="content-header">

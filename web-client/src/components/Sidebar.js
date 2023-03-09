@@ -59,7 +59,24 @@ export default function Sidebar(props){
                   <p>
                     Lịch phục vụ
                   </p>
+                  <i className="fas fa-angle-left right" />
                 </a>
+
+                <ul className="nav nav-treeview">
+                  <li className="nav-item">
+                    <a href="/service-schedule" className={(props.focusSmall == "Lịch phục vụ")?"nav-link active":"nav-link"}>
+                      <i className="far fa-circle nav-icon" />
+                      <p>Chung
+                      </p>
+                    </a>
+                  </li>
+                  <li className="nav-item">
+                    <a href="/create-served" className={(props.focusSmall == "Lịch phục vụ2")?"nav-link active":"nav-link"}>
+                      <i className="far fa-circle nav-icon" />
+                      <p>Thiết lập nhanh</p>
+                    </a>
+                  </li>
+                </ul>
               </li>
               
               <li className="nav-item">
