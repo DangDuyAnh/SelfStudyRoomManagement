@@ -245,6 +245,7 @@ roomController.statusForRF = async (req, res, next) => {
 
 roomController.statusByName = async (req, res, next) => {
     try {
+        console.log("res", req.body)
         const {
             roomType,
             date,
