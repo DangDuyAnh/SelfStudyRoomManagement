@@ -9,7 +9,6 @@ app.post(
     asyncWrapper(studentController.login)
 );
 
-
 app.post('/student/create', async(req, res) => {
     const u = new studentSchema(req.body);
     try{
@@ -35,8 +34,7 @@ app.get('/student/get/:id', async(req, res) => {
         const u = await studentSchema.findById(req.params.id);
         if(!u) res.status(404).send("No student found!");
         res.send(u);
-        res.status(200).send();
-        
+        res.status(200).send(); 
     }catch (error){
         res.status(500).send(error);
     }
