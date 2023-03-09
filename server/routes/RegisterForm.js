@@ -4,7 +4,6 @@ const app = express();
 
 app.post('/registerForm/create', async(req, res) => {
     const u = new registerFormSchema(req.body);
-    console.log(req.body);
     try{
         await u.save();
         res.send(u);
@@ -47,9 +46,7 @@ app.get('/registerForm/listByStudent/:id', async(req, res) => {
 });
 
 app.get('/registerForm/get/:id', async(req, res) => {
-    console.log("Ga")
     try{
-        console.log("req.params.id", req.params.id)
         const u = await registerFormSchema.findById(req.params.id);
         if(!u) res.status(404).send("No registerForm found!");
         res.send(u);

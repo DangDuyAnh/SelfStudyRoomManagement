@@ -1,17 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import DatePicker from 'react-native-date-picker'
+import axiosClient from '../../utils/axiosClient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function QRScan() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState('Not yet scanned')
+  const [api, setAPI] = useState('Not yet scanned')
+
+  const [dateStart, setDateStart] = useState(new Date())
+  const [dateEnd, setDateEnd] = useState(new Date())
+  const [openStart, setOpenStart] = useState(false)
+  const [openEnd, setOpenEnd] = useState(false)
+  const [getDateStart, setGetDateStart] = useState('Chọn thời gian')
+  const [getDateEnd, setGetDateEnd] = useState('Chọn thời gian')
 
   const askForCameraPermission = () => {
     (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
     })()
+  }
+
+  const change_date_start = (date) => {
+    setGetDateStart(date.getHours() + ":" + date.getMinutes())
+  }
+
+  const change_date_end = (date) => {
+    setGetDateEnd(date.getHours() + ":" + date.getMinutes())
   }
 
   // Request Camera Permission
@@ -22,9 +40,27 @@ export default function QRScan() {
   // What happens when we scan the bar code
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    setText(data)
+    setAPI(data)
     console.log('Type: ' + type + '\nData: ' + data)
   };
+
+  const registerQR = async () => {
+    const id = await AsyncStorage.getItem('userToken');
+    console.log("id", id)
+    const params = {
+      "idStudent": id,
+      "startTime": dateStart,
+      "endTime": dateEnd
+    }
+    const res = await axiosClient('post', `${api}`, params)
+    if (res.status == 200) {
+      alert("Đăng ký thành công")
+      setTimeout(() => { navigation.goBack() }, 1000)
+    }
+    else {
+      alert("thất bại")
+    }
+  }
 
   // Check permissions and return the screens
   if (hasPermission === null) {
@@ -44,14 +80,48 @@ export default function QRScan() {
   // Return the View
   return (
     <View style={styles.container}>
-      <View style={styles.barcodebox}>
-        <BarCodeScanner
-          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-          style={{ height: 400, width: 400 }} />
-      </View>
-      <Text style={styles.maintext}>{text}</Text>
+      {
+        !scanned ? <View style={styles.barcodebox}>
+          <BarCodeScanner
+            onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+            style={{ height: 400, width: 400 }} />
+        </View>
+          : <Text></Text>
+      }
+
+      <Text style={styles.maintext}>api: {api}</Text>
 
       {scanned && <Button title={'Scan again?'} onPress={() => setScanned(false)} color='tomato' />}
+
+
+      <View style={{ flex: 4, flexDirection: 'row' }}>
+        <Text style={{ marginTop: 20 }}>Thời gian kết thúc:  </Text>
+        <TouchableOpacity style={styles.placeholder1}
+          onPress={() => { setOpenEnd(true) }}
+
+        >
+          <DatePicker
+            modal
+            open={openEnd}
+            date={dateEnd}
+            mode={"time"}
+            onConfirm={(dateEnd) => {
+              setOpenEnd(false)
+              setDateEnd(dateEnd)
+              change_date_end(dateEnd)
+            }}
+            onCancel={() => {
+              setOpenEnd(false)
+            }}
+          />
+          <Text style={{ marginTop: 20 }}>{getDateEnd}</Text>
+        </TouchableOpacity>
+
+      </View>
+      <TouchableOpacity style={{ flex: 1 }} onPress={registerQR}><Text style={{ color: 'red' }}>Đăng ký</Text></TouchableOpacity>
+
+
+
     </View>
   );
 }
@@ -61,7 +131,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   maintext: {
     fontSize: 16,

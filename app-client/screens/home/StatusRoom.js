@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, FlatList } from "react-native";
 import DatePicker from 'react-native-date-picker'
 import { Picker } from '@react-native-picker/picker';
+import axiosClient from "../../utils/axiosClient";
 
 function StatusRoom(props) {
   const [date, setDate] = useState(new Date())
@@ -10,8 +11,7 @@ function StatusRoom(props) {
   const [room, setRoom] = useState();
   const [status, setStatus] = useState();
   const [building, setBuilding] = useState();
-
-  const ITEMS = [
+  const [dataRoom, setDataRoom] = useState([
     {
       id: 1,
       data: '101',
@@ -42,12 +42,12 @@ function StatusRoom(props) {
       current: 45,
       max: 50
     },
-  ];
-  const a = "red"
+  ]);
+
   const GridView = ({ data, max, current }) => {
-    
-    if (current/max < 0.25) {
-      return(
+
+    if (current / max < 0.25) {
+      return (
         <View style={{
           flex: 1,
           height: 75,
@@ -56,14 +56,14 @@ function StatusRoom(props) {
           backgroundColor: "rgba(126,211,33,1)",
           justifyContent: 'center',
           alignItems: 'center'
-          }}>
+        }}>
           <Text style={styles.gridText} >{data}</Text>
-          <Text style={{marginTop: 5}}>{current}/{max}</Text>
+          <Text style={{ marginTop: 5 }}>{current}/{max}</Text>
         </View>
       );
     }
-    else if (current/max < 0.5 && current/max >= 0.25){
-      return(
+    else if (current / max < 0.5 && current / max >= 0.25) {
+      return (
         <View style={{
           flex: 1,
           height: 75,
@@ -72,14 +72,14 @@ function StatusRoom(props) {
           backgroundColor: "rgba(248,231,28,1)",
           justifyContent: 'center',
           alignItems: 'center'
-          }}>
+        }}>
           <Text style={styles.gridText} >{data}</Text>
-          <Text style={{marginTop: 5}}>{current}/{max}</Text>
+          <Text style={{ marginTop: 5 }}>{current}/{max}</Text>
         </View>
       );
     }
     else {
-      return(
+      return (
         <View style={{
           flex: 1,
           height: 75,
@@ -88,21 +88,32 @@ function StatusRoom(props) {
           backgroundColor: "rgba(208,2,27,1)",
           justifyContent: 'center',
           alignItems: 'center'
-          }}>
+        }}>
           <Text style={styles.gridText} >{data}</Text>
-          <Text style={{marginTop: 5}}>{current}/{max}</Text>
+          <Text style={{ marginTop: 5 }}>{current}/{max}</Text>
         </View>
       );
     }
-    
+
   }
 
   const change_date = (date) => {
     setGetDate(date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear() + "   " + date.getHours() + ":" + date.getMinutes())
   }
+
+  const getStatusRoom = async () => {
+    const params = {
+      "date": date,
+      "idBuilding": building,
+      "status": status
+    }
+    const res = await axiosClient('post', '/room/status', params)
+
+    console.log("Res", res.data)
+  }
   return (
     <View style={styles.container}>
-      
+
       <Text style={styles.loremIpsum}>Lorem Ipsum</Text>
       <View style={styles.thờiGianColumnRow}>
         <View style={styles.thờiGianColumn}>
@@ -137,9 +148,10 @@ function StatusRoom(props) {
             onValueChange={(itemValue, itemIndex) =>
               setStatus(itemValue)
             }>
-            <Picker.Item label="Ít" value="Ít" />
-            <Picker.Item label="Trung bình" value="Trung bình" />
-            <Picker.Item label="Đông" value="Đông" />
+            <Picker.Item label="Tất cả" value="" />
+            <Picker.Item label="Phòng vắng" value="Phòng vắng" />
+            <Picker.Item label="Bình thường" value="Bình thường" />
+            <Picker.Item label="Phòng đầy" value="Phòng đầy" />
           </Picker>
 
           {/* <Text >Tất cả</Text> */}
@@ -150,8 +162,9 @@ function StatusRoom(props) {
             onValueChange={(itemValue, itemIndex) =>
               setRoom(itemValue)
             }>
-            <Picker.Item label="Phòng tự học" value="Phòng tự học" />
-            <Picker.Item label="Phòng tự do" value="Phòng tự do" />
+            <Picker.Item label="Tất cả" value="" />
+            {/* <Picker.Item label="Phòng tự học" value="Phòng tự học" />
+            <Picker.Item label="Phòng tự do" value="Phòng tự do" /> */}
           </Picker>
           {/* <TouchableOpacity style={styles.button13}>
             <Text style={styles.phongTựHọc3}>Phòng tự học</Text>
@@ -171,20 +184,20 @@ function StatusRoom(props) {
             <Text style={styles.dong}>Đông</Text>
           </View>
           <View style={styles.rect10Row}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={getStatusRoom}>
               <Text style={{ color: 'red', fontSize: 20 }}>Tìm kiếm</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
       <View style={styles.rect5}>
-      <FlatList
-        data={ITEMS}
-        renderItem={({ item }) => <GridView data={item.data} current={item.current} max={item.max} />}
-        keyExtractor={item => item.id}
-        numColumns={3}
-        key={item => item.id}
-      />
+        <FlatList
+          data={dataRoom}
+          renderItem={({ item }) => <GridView data={item.data} current={item.current} max={item.max} />}
+          keyExtractor={item => item.id}
+          numColumns={3}
+          key={item => item.id}
+        />
 
       </View>
       <View style={styles.toaNhaRow}>
@@ -198,12 +211,13 @@ function StatusRoom(props) {
           onValueChange={(itemValue, itemIndex) =>
             setBuilding(itemValue)
           }>
+          <Picker.Item label="Tất cả" value="" />
           <Picker.Item label="D1" value="D1" />
           <Picker.Item label="D3" value="D3" />
           <Picker.Item label="B1" value="B1" />
         </Picker>
       </View>
-     
+
     </View>
   );
 }
@@ -386,7 +400,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white'
   },
- 
+
   gridbox: {
     flex: 1,
     height: 75,
@@ -396,7 +410,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
- 
+
   gridText: {
     fontSize: 24,
     color: 'white'

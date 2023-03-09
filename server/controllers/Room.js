@@ -81,6 +81,7 @@ const compareTimeOnlySmaller = (first, second) => {
 
 roomController.status = async (req, res, next) => {
     try {
+        console.log(req.body)
         const {
             idRoom,
             date,
