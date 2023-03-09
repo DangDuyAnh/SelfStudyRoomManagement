@@ -245,6 +245,9 @@ export default function ServiceSchedule() {
                     </div>
 
                 </div>
+                <div class="card-footer clearfix">
+                            <button type="button" class="btn btn-primary float-right" onClick={() => {window.location = '/create-served' }}> <i class="fas fa-plus"></i> Thêm lịch phục vụ</button>
+                            </div>
             </div>
         </div>
     );

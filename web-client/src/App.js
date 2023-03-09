@@ -4,6 +4,7 @@ import Login from "./screens/Login";
 import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import DetailBuilding from './screens/DetailBuilding/DetailBuilding';
 import CreateRoom from './screens/CreateRoom/CreateRoom';
+import CreateServed from './screens/CreateServed/CreateServed';
 import DetailRoom from './screens/DetailRoom/DetailRoom';
 import ServiceSchedule from './screens/ServiceSchedule/ServiceSchedule';
 import DetailSchedule from './screens/DetailSchedule/DetailSchedule';
@@ -23,6 +24,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/building/:id' component={DetailBuilding}/>
           <Route path='/create-room/:id' component={CreateRoom}/>
+          <Route path='/create-served' component={CreateServed}/>
           <Route path='/detail-room/:id' component={DetailRoom} />
 
           <Route path='/service-schedule' component={ServiceSchedule} />

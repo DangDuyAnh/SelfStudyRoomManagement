@@ -1,5 +1,6 @@
 const express = require("express");
 const xlsx = require('xlsx');
+const mongoose = require('mongoose');
 const servedTimeSchema = require('../models/ServedTime')
 const app = express();
 const servedTimeController = require("../controllers/ServedTime");
@@ -60,17 +61,22 @@ app.get('/servedTime/delete/:id', async(req, res) => {
 app.post('/servedTime/createByExcel', async(req, res) => {
     const startEffectiveDate = req.body.startEffectiveDate;
     const endEffectiveDate = req.body.endEffectiveDate;
-    const IDRoom = -1, startTime = "", endTime = "";
+    const IdRoom = mongoose.Types.ObjectId('6408fb4684334bfb973c4ae6');
+    const startTime = "2023-03-10 14:00:00", endTime = "2023-03-10 16:30:00";
     const file = req.body.file;
+    console.log('starttttttttttttttttttttt');
     if(file)
     {const workbook = xlsx.read(file, { type: 'buffer' });
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-    IDRoom = worksheet['A2'] ? worksheet['A2'].v : -1;
+    IdRoom = worksheet['A2'] ? worksheet['A2'].v : -1;
     startTime = worksheet['B2'] ? worksheet['B2'].v : "";
-    endTime = worksheet['C2'] ? worksheet['C2'].v : "";}
+    endTime = worksheet['C2'] ? worksheet['C2'].v : "";
+    console.log(endTime);
+    console.log("endTime");
+}
     
     const u = new servedTimeSchema({
-        IDRoom: IDRoom,
+        idRoom: IdRoom,
         startTime: startTime,
         endTime: endTime,
         startEffectiveDate: startEffectiveDate,
