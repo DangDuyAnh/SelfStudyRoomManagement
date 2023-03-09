@@ -7,12 +7,19 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
 
 export default function RegisterForm(){
 
     const values = [
-        {},
-        {}
+        {
+            building: "D3",
+            name: "101"
+        },
+        {
+            building: "D5",
+            name: "102"
+        }
     ];
 
     return(
@@ -120,19 +127,66 @@ export default function RegisterForm(){
                                 </Box>
 
                                 <Box sx={{mt: 2}}>
-                                    <Box sx={{display: "flex"}}>
-                                        <Box sx={{display: "flex", alignItems: "center", height: '', width: "195px"}}>
+                                    <Box sx={{display: "flex", alignItems: "center"}}>
+                                        <Box sx={{display: "flex", alignItems: "center", width: "195px"}}>
                                             <Radio size="small" sx={{mr: 2}}/>
                                             <Typography>Phòng học khác: </Typography>
                                         </Box>
                                         <Box sx={{ml: 3, marginTop : "7px"}}>
                                             <Box>
+                                            <Autocomplete
+                                                id="country-select-demo"
+                                                sx={{ width: 300 }}
+                                                options={values}
+                                                autoHighlight
+                                                getOptionLabel={(option) => `${option.building} ${option.name}`}
+                                                renderOption={(props, option) => (
+                                                    <Box component="li" sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
+                                                        <Box>
+                                                            <Typography sx={{fontWeight: "600"}}>{option.building} {option.name}</Typography>
+                                                            <Box sx={{width: "250px", display: "flex", justifyContent: "space-between"}}>
+                                                            <div className='row-icon'>
+                                                                <div>
+                                                                    <EventSeatIcon style={{fontSize: '20px', color: '#DC3545'}}/>
+                                                                </div>
+                                                                <p style={{fontWeight: '600', color: '#DC3545'}}>5/30</p>
+                                                            </div>  
+                                                            <div className='row-icon'>
+                                                                <div>
+                                                                    <PeopleAltIcon style={{fontSize: '18px'}}/>                                               
+                                                                </div>
+                                                                <p>Phòng cá nhân</p>
+                                                            </div>
+                                                            </Box>
+                                                        </Box>
+                                                    </Box>
+                                                )}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                    {...params}
+                                                    label="Chọn một phòng học"
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        autoComplete: 'new-password', // disable autocomplete and autofill
+                                                    }}
+                                                    />
+                                                )}
+                                            />
                                             </Box>
                                         </Box>                                        
                                     </Box>
                                 </Box>
                                 </div>
                             </div>
+                        </div>
+
+                        <div style={{margin: "60px 0px 100px 0px", display: "flex", justifyContent: "center"}}>
+                        <Button variant="contained" color="success" sx={{mr: 5}}>
+                            Xác nhận
+                        </Button>
+                        <Button variant="contained" color="error">
+                            Hủy đơn
+                        </Button>
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
     studentCode: {
-        type: Number,
+        type: String,
         required: false
     },
     password: {

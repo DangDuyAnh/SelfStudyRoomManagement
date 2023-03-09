@@ -15,7 +15,29 @@ app.post('/registerForm/create', async(req, res) => {
 });
 
 app.get('/registerForm/list', async(req, res) => {
-    const u = await registerFormSchema.find({});
+    const u = await registerFormSchema.find({}).populate({
+        path: "idStudent",
+        model: "students"
+    }).populate({
+        path: "assignedRoom",
+        model: "rooms",
+        populate: [{path: "idBuilding", model: "buildings"}]
+    });
+    try{
+        res.send(u);
+    }catch (error){
+        res.status(500).send(error);
+    }
+});
+
+app.get('/registerForm/listByStudent/:id', async(req, res) => {
+    const u = await registerFormSchema.find({
+        idStudent: req.params.id
+    }).populate({
+        path: "assignedRoom",
+        model: "rooms",
+        populate: [{path: "idBuilding", model: "buildings"}]
+    });
     try{
         res.send(u);
     }catch (error){

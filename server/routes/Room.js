@@ -23,7 +23,10 @@ app.post('/room/list-by-building-name',
 
 app.get('/room/get/:id', async(req, res) => {
     try{
-        const u = await roomSchema.findById(req.params.id);
+        const u = await roomSchema.findById(req.params.id).populate({
+            path: 'idBuilding',
+            model: 'buildings'
+        });
         if(!u) res.status(404).send("No room found!");
         res.send(u);
         res.status(200).send();

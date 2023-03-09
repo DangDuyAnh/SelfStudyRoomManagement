@@ -23,7 +23,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/building/:id' component={DetailBuilding}/>
           <Route path='/create-room/:id' component={CreateRoom}/>
-          <Route path='/detail-room' component={DetailRoom} />
+          <Route path='/detail-room/:id' component={DetailRoom} />
           <Route path='/service-schedule' component={ServiceSchedule} />
           <Route path='/detail-schedule' component={DetailSchedule} />
           <Route path='/schedule-configue/:id' component={ScheduleConfigue} />
