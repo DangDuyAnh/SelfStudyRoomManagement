@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -10,9 +10,46 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useDispatch, useSelector } from 'react-redux'
 import { LOGOUT } from "../../redux/features/auth/authSlice";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Profile(props) {
   const dispatch = useDispatch()
+  
+  const [name, setName] = useState();
+  const [mssv, setMSSV] = useState();
+  const [phone, setPhone] = useState();
+
+
+  const [state, setState] = useState({});
+  const getName = async () => {
+    const n = await AsyncStorage.getItem('name');
+    return n
+  }
+  const getMSSV = async () => {
+    const m = await AsyncStorage.getItem('studentCode');
+    return m
+  }
+
+  const getPhone = async () => {
+    const p = await AsyncStorage.getItem('phone');
+    return p
+  }
+
+ 
+
+  useEffect(() => {
+
+    getName().then(setName)
+    getMSSV().then(setMSSV)
+    getPhone().then(setPhone)
+    // getQRHistory().then(setDataQRHistory)
+
+
+    return () => {
+      setState({}); // This worked for me
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.rect2}>
@@ -29,17 +66,17 @@ export default function Profile(props) {
             <Icon name="user" style={styles.icon}></Icon>
 
             <View style={styles.loremIpsum2Column}>
-              <Text style={styles.loremIpsum2}>Nguyễn Công Hoàng Anh</Text>
+              <Text style={styles.loremIpsum2}>{name}</Text>
               <View style={styles.sdt9816590894Row}>
                 <Text style={styles.sdt9816590894}>Sđt:</Text>
-                <Text style={styles.sdt9816590893}>0981659089</Text>
+                <Text style={styles.sdt9816590893}>{phone}</Text>
               </View>
-              <View style={styles.email2Row}>
+              {/* <View style={styles.email2Row}>
                 <Text style={styles.email2}>Email:</Text>
                 <Text style={styles.loremIpsum3}>
                   anh.nch183473@sis.hust.edu.vn
                 </Text>
-              </View>
+              </View> */}
             </View>
 
           </View>
@@ -56,7 +93,7 @@ export default function Profile(props) {
           {/* <Text style={styles.ngaySinh}>Ngày sinh:</Text> */}
         </View>
         <View style={styles.maSinhVien2Row}>
-          <Text style={styles.maSinhVien2}>20183473</Text>
+          <Text style={styles.maSinhVien2}>{mssv}</Text>
           {/* <Text style={styles.maSinhVien3}>30/08/2000</Text> */}
         </View>
         <View style={styles.khoaViệnRow}>

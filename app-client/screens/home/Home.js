@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -10,8 +10,37 @@ import {
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useIsFocused } from '@react-navigation/native';
 
-export default function Home({navigation}) {
+export default function Home({ navigation }) {
+  const [name, setName] = useState();
+  const [mssv, setMSSV] = useState();
+
+
+  const [state, setState] = useState({});
+  const isFocused = useIsFocused();
+  const getName = async () => {
+    const n = await AsyncStorage.getItem('name');
+    return n
+  }
+  const getMSSV = async () => {
+    const m = await AsyncStorage.getItem('studentCode');
+    return m
+  }
+
+  useEffect(() => {
+
+    getName().then(setName)
+    getMSSV().then(setMSSV)
+    // getQRHistory().then(setDataQRHistory)
+
+
+    return () => {
+      setState({}); // This worked for me
+    }
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.rect}>
@@ -26,21 +55,21 @@ export default function Home({navigation}) {
             style={styles.image2} size={65} color="red" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.button1} onPress={() => {
-            navigation.navigate("StatusRoom")
-          }}>
+          navigation.navigate("StatusRoom")
+        }}>
           <AntDesign name="barschart" resizeMode="contain"
             style={styles.image2} size={65} color="red" />
         </TouchableOpacity>
       </View>
       <View style={styles.button3Row}>
         <TouchableOpacity style={styles.button3} onPress={() => {
-            navigation.navigate("HistoryRegister")
-          }}>
+          navigation.navigate("HistoryRegister")
+        }}>
           <MaterialIcons name="history" resizeMode="contain"
             style={styles.image} size={65} color="red" />
 
         </TouchableOpacity>
-        
+
       </View>
       <View style={styles.image6Row}>
         <Image
@@ -48,9 +77,9 @@ export default function Home({navigation}) {
           resizeMode="contain"
           style={styles.image6}
         ></Image>
-        <Text style={styles.loremIpsum}>Nguyễn Công Hoàng Anh</Text>
+        <Text style={styles.loremIpsum}>{name}</Text>
         <Text style={styles.loremIpsum2}>|</Text>
-        <Text style={styles.loremIpsum3}>20183473</Text>
+        <Text style={styles.loremIpsum3}>{mssv}</Text>
       </View>
       <View style={styles.dangKyPhongRow}>
         <Text style={styles.dangKyPhong}>Đăng ký phòng</Text>

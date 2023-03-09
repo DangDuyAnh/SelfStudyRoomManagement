@@ -32,7 +32,7 @@ function App() {
           <Route path='/room-status' component={RoomStatus}/>
           <Route path='/waiting-register' component={WaitingRegister} />
           <Route path='/create-account' component={AddAcount}/>
-          <Route path='/register-form' component={RegisterForm}/>
+          <Route path='/register-form/:id' component={RegisterForm}/>
         </Switch>
       </Router>
     </>

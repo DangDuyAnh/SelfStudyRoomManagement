@@ -1,3 +1,4 @@
+import * as React from "react";
 import Sidebar from '../components/Sidebar';
 import Navbar from '../components/Navbar';
 import Radio from '@mui/material/Radio';
@@ -8,8 +9,55 @@ import EventSeatIcon from '@mui/icons-material/EventSeat';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
+import {axiosGet, axiosPost} from "../utils/api" ;
 
-export default function RegisterForm(){
+export default function RegisterForm(props){
+    const [selectedValue, setSelectedValue] = React.useState("a");
+    const [form, setForm] = React.useState({});
+    const getData = async () => {
+        let res = await axiosGet("/registerForm/get/" + props.match.params.id)
+        setForm(res.data)
+    }
+
+    React.useState(() => {
+        getData();
+    }, []);
+
+
+    const renderCode = (code) => {
+        if (!code) return null;
+        return code.toString().substring(code.length - 5)
+      }
+
+      const FormatTime = (data) => {
+        let currentYear = new Date().getFullYear();
+        let time = new Date(data);
+        let showTime;
+        let singleMinutes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        let minute = time.getMinutes().toString();
+        if (singleMinutes.includes(minute)) minute = '0' + minute;
+        if (currentYear === time.getFullYear()) {
+          showTime = `${time.getDate()}/${time.getMonth()+1} lúc ${time.getHours()}:${minute}`
+        } else {
+          showTime = `${time.getDate()}/${time.getMonth()+1}/${time.getFullYear()} lúc ${time.getHours()}:${minute}`
+        } 
+        return showTime;
+      }
+
+      const DateToString = (date) => {
+        let time = new Date(date)
+        let showTime = `${time.getDate()}/${time.getMonth()+1}/${time.getFullYear()}`
+        return showTime
+      }
+      
+      const TimeToString = (date) => {
+        let time = new Date(date);
+        let singleMinutes = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        let minute = time.getMinutes().toString();
+        if (singleMinutes.includes(minute)) minute = '0' + minute;
+        let showTime = `${time.getHours()}:${minute}`;
+        return showTime
+      }
 
     const values = [
         {
@@ -21,6 +69,10 @@ export default function RegisterForm(){
             name: "102"
         }
     ];
+
+    const handleChange = (event) => {
+        setSelectedValue(event.target.value);
+      };
 
     return(
         <div className="wrapper">
@@ -36,6 +88,7 @@ export default function RegisterForm(){
                             </div>
                         </div>
 
+                        {form.idStudent&&
                         <div class="card" style={{margin: '20px 0px'}}>
                             <div class="card-body">
                                 <div style={{padding: '10px 50px'}}>
@@ -43,55 +96,56 @@ export default function RegisterForm(){
                                     <div style={{width: '100%', height: '1px', backgroundColor: 'black', marginTop: '8px', marginBottom: '20px'}}/>
                                     <div style={{display: 'flex'}}>
                                         <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Mã đơn: </p>
-                                        <p className="booking-pay-line">#123456</p>
+                                        <p className="booking-pay-line">#{renderCode(form._id)}</p>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <div style={{width: "600px", display: "flex"}}>
                                             <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Sinh viên đăng ký: </p>
-                                            <p className="booking-pay-line">Nguyễn Văn A </p>
+                                            <p className="booking-pay-line">{form.idStudent.name}</p>
                                         </div>
                                         <div style={{display: "flex"}}>
                                             <p className="booking-pay-line" style={{fontWeight:'500'}}>MSSV:&nbsp;</p>
-                                            <p className="booking-pay-line">20183471 </p>
+                                            <p className="booking-pay-line">{form.idStudent.studentCode} </p>
                                         </div>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Thời điểm tạo đơn: </p>
-                                        <p className="booking-pay-line">50</p>
+                                        <p className="booking-pay-line">{FormatTime(form.createdAt)}</p>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Loại phòng mong muốn: </p>
-                                        <p className="booking-pay-line">Phòng học nhóm</p>
+                                        <p className="booking-pay-line">{form.typeRoom}</p>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Ngày đăng ký: </p>
-                                        <p className="booking-pay-line">Phòng học nhóm</p>
+                                        <p className="booking-pay-line">{DateToString(form.dateRegister)}</p>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <div style={{width: "600px", display: "flex"}}>
                                             <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Giờ bắt đầu: </p>
-                                            <p className="booking-pay-line">Nguyễn Văn A </p>
+                                            <p className="booking-pay-line">{TimeToString(form.startTime)}</p>
                                         </div>
                                         <div style={{display: "flex"}}>
                                             <p className="booking-pay-line" style={{fontWeight:'500'}}>Giờ kết thúc:&nbsp;</p>
-                                            <p className="booking-pay-line">20183471 </p>
+                                            <p className="booking-pay-line">{TimeToString(form.endTime)}</p>
                                         </div>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Số chỗ ngồi đăng ký: </p>
-                                        <p className="booking-pay-line">10</p>
+                                        <p className="booking-pay-line">{form.numberSeats}</p>
                                     </div>
                                     <div style={{display: 'flex'}}>
                                         <div>
                                             <p className="booking-pay-line" style={{fontWeight:'500' ,width: '190px'}}>Ghi chú: </p>
                                         </div>
                                         <div style={{textAlign: "justify"}}>
-                                            <p className="booking-pay-line">Phòng học nhóm</p>
+                                            <p className="booking-pay-line">{form.message}</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        }
 
                         <div class="card" style={{margin: '20px 0px'}}>
                             <div class="card-body">
@@ -101,7 +155,9 @@ export default function RegisterForm(){
                                 <Box sx={{mt: 2}}>
                                     <Box sx={{display: "flex"}}>
                                         <Box sx={{display: "flex", alignItems: "center", height: ''}}>
-                                            <Radio size="small" sx={{mr: 2}}/>
+                                            <Radio size="small" sx={{mr: 2}}        checked={selectedValue === 'a'}
+        onChange={handleChange}
+        value="a"/>
                                             <Typography>Phòng học đề xuất: </Typography>
                                         </Box>
                                         <Box sx={{ml: 3, marginTop : "7px"}}>
@@ -129,7 +185,9 @@ export default function RegisterForm(){
                                 <Box sx={{mt: 2}}>
                                     <Box sx={{display: "flex", alignItems: "center"}}>
                                         <Box sx={{display: "flex", alignItems: "center", width: "195px"}}>
-                                            <Radio size="small" sx={{mr: 2}}/>
+                                            <Radio size="small" sx={{mr: 2}}         checked={selectedValue === 'b'}
+        onChange={handleChange}
+        value="b"/>
                                             <Typography>Phòng học khác: </Typography>
                                         </Box>
                                         <Box sx={{ml: 3, marginTop : "7px"}}>

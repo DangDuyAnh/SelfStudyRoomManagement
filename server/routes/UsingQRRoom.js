@@ -14,6 +14,32 @@ app.post('/usingQRRoom/create', async(req, res) => {
     }
 });
 
+app.post('/qr-scan/:id', async(req, res) => {
+    const u = new usingQRRoomSchema({
+        idRoom: req.params.id,
+        ...req.body});
+    console.log(req.body);
+    try{
+        await u.save();
+        res.send(u);
+        
+    }catch (error){
+        res.status(500).send(error);
+    }
+});
+
+app.get('/usingQRRoom/byStudent', async(req, res) => {
+    try{
+        const u = await usingQRRoomSchema.find({idStudent: req.params.id});
+        if(!u) res.status(404).send("No usingQRRoom found!");
+        res.send(u);
+        res.status(200).send();
+        
+    }catch (error){
+        res.status(500).send(error);
+    }
+});
+
 app.get('/usingQRRoom/list', async(req, res) => {
     const u = await usingQRRoomSchema.find({});
     try{

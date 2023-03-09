@@ -10,9 +10,11 @@ import {
 import DatePicker from 'react-native-date-picker'
 import axiosClient from "../../utils/axiosClient";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Picker } from '@react-native-picker/picker';
 
 
 export default function RegisterRoom({ navigation }) {
+  const [status, setStatus] = useState();
   const [dateRegister, setDateRegister] = useState(new Date())
   
   const [dateStart, setDateStart] = useState(new Date())
@@ -23,20 +25,14 @@ export default function RegisterRoom({ navigation }) {
   const [getDateEnd, setGetDateEnd] = useState('Chọn thời gian')
 
   const [numberSeats, setNumberSeats] = useState('Chọn thời gian')
-  const [message, setMessage] = useState('Chọn thời gian')
-  const [typeRoom, setTypeRoom] = useState('Chọn thời gian')
+  const [message, setMessage] = useState()
   
   
 
   const change_date_start = (date) => {
     setGetDateStart(date.getHours() + ":" + date.getMinutes())
   }
-
-  // const change_date= (date) => {
-  //   console.log("đâte", date)
-  //   setDate(date.getHours() + ":" + date.getMinutes())
-  // }
-
+  
   const change_date_end = (date) => {
     setGetDateEnd(date.getHours() + ":" + date.getMinutes())
   }
@@ -49,7 +45,7 @@ export default function RegisterRoom({ navigation }) {
       "startTime": dateStart,
       "endTime": dateEnd,
       "message": message,
-      "typeRoom": typeRoom,
+      "typeRoom": status,
       "dateRegister": dateRegister
     }
     // console.log(change_date(date))
@@ -78,17 +74,28 @@ export default function RegisterRoom({ navigation }) {
         <Text style={styles.soLuongSinhVien}>Số lượng sinh viên:</Text>
         <TextInput
           placeholder="Input"
+          keyboardType = 'numeric'
           onChangeText={setNumberSeats}
           style={styles.placeholder}
         ></TextInput>
       </View>
       <View style={styles.loaiPhongRow}>
         <Text style={styles.loaiPhong}>Loại phòng:</Text>
-        <TextInput
+        <Picker
+          style={styles.placeholder2}
+          selectedValue={status}
+          onValueChange={(itemValue, itemIndex) =>
+            setStatus(itemValue)
+          }>
+          <Picker.Item label="Phòng cá nhân" value="Phòng cá nhân" />
+          <Picker.Item label="Phòng học nhóm" value="Phòng học nhóm" />
+        </Picker>
+
+        {/* <TextInput
           placeholder="Input"
           onChangeText={setTypeRoom}
           style={styles.placeholder2}
-        ></TextInput>
+        ></TextInput> */}
       </View>
       <View style={styles.thờiGianSửDụngRow}>
         <Text style={styles.thờiGianSửDụng}>Thời gian kết thúc:</Text>
@@ -223,13 +230,14 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     color: "#121212",
     fontWeight: "bold",
+    marginTop: 10
   },
   placeholder2: {
     fontFamily: "roboto-regular",
     color: "#121212",
     height: 28,
-    width: 188,
-    marginLeft: 73
+    width: 215,
+    marginLeft: 55
   },
   loaiPhongRow: {
     height: 28,

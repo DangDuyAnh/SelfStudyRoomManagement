@@ -108,7 +108,7 @@ export default function DetailBuilding(props) {
                                                             <p>{i.numberSeats} chỗ ngồi</p>
                                                             </div>
 
-                                                            {i.accessType == "qrcode"?
+                                                            {i.accessType == "Phòng tự do"?
                                                             <div className='row-icon'>
                                                             <div>
                                                                 <QrCodeIcon style={{fontSize: '20px'}}/>

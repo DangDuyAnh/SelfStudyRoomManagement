@@ -219,7 +219,7 @@ export default function ServiceSchedule() {
                             </div>
                         </div>   
 
-                        <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: '40px'}}>
+                        {/* <div style={{display: 'flex', justifyContent: 'center', width: '100%', marginTop: '40px'}}>
                             <nav aria-label="Page navigation example">
                                 <ul className="pagination">
                                     <li className="page-item">
@@ -241,7 +241,7 @@ export default function ServiceSchedule() {
                                     </li>
                                 </ul>
                             </nav>
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
