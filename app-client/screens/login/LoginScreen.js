@@ -20,7 +20,7 @@ export default function LoginScreen({ navigation }) {
 
 
   const [account, setAccount] = useState({
-    studentCode: '',
+    studentCode: '2',
     password: ''
   })
   const changeAccount = useCallback((key)=> {

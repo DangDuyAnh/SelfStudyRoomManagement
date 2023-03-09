@@ -1,7 +1,11 @@
-import React, { Component } from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import React, { Component, useEffect, useState } from "react";
+import { StyleSheet, View, Text, FlatList, TouchableOpacity } from "react-native";
+import axiosClient from "../../utils/axiosClient";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HistoryRegister(props) {
+    const [dataHistory, setDataHistory] = useState()
+
     const data = [{
         id: ' 1',
         date: '27-12-2022',
@@ -35,17 +39,40 @@ function HistoryRegister(props) {
     }
     ]
 
+    const getHistory = async () => {
+        // const id = await AsyncStorage.getItem('userToken');
+        const id = '6408fb4684334bfb973c4ae6'
+        const res = await axiosClient(method = 'get', url = `/registerForm/get/${id}`)
+        console.log(res.data)
+    }
+
+    // useEffect(() => {
+
+
+    // 	setTimeout(() => { setLoading(false) }, 1000)
+
+    // 	getHistory().then(setDataPost)
+
+
+    // 	getUser().then(setDataUser)
+    // 	return () => {
+    // 		setState({}); // This worked for me
+    // 	}
+    // }, [isFocused, del]);
+
+
+
     const GridViewDate = ({ date, historyTime }) => {
         return (
             <View style={styles.container}>
                 <Text style={styles.loremIpsum14}>{date}</Text>
                 <FlatList
-                data={historyTime}
-                renderItem={({ item }) => <GridViewTime time={item.time} room={item.room} total={item.total} />}
-                keyExtractor={item => item.id}
-                // numColumns={3}
-                key={item => item.id}
-            />
+                    data={historyTime}
+                    renderItem={({ item }) => <GridViewTime time={item.time} room={item.room} total={item.total} />}
+                    keyExtractor={item => item.id}
+                    // numColumns={3}
+                    key={item => item.id}
+                />
             </View>
         )
     }
@@ -53,7 +80,9 @@ function HistoryRegister(props) {
     const GridViewTime = ({ time, room, total }) => {
         return (
             <View>
-                <Text style={styles.loremIpsum15}>- {time}: {room} ({total} chỗ ngồi)</Text>
+                <TouchableOpacity onPress={getHistory}>
+                    <Text style={styles.loremIpsum15}>- {time}: {room} ({total} chỗ ngồi)</Text>
+                </TouchableOpacity>
             </View>)
     }
     return (

@@ -19,10 +19,16 @@ export const login =  createAsyncThunk('/student/login', async (params, thunkAPI
         const res = await axiosClient('post', '/student/login', newParams)
         if (res.status ==200){
         await AsyncStorage.setItem('userToken', res.data._id)
+        await AsyncStorage.setItem('name', res.data.name)
+        await AsyncStorage.setItem('phone', res.data.phone)
+        await AsyncStorage.setItem('studentCode', res.data.studentCode)
+
         }
         // return res
         return res.data
     } catch(error) {
+        console.log("ga12234", error)
+
         return thunkAPI.rejectWithValue(error.response.data)
     } 
 })
@@ -38,6 +44,9 @@ const authSlice = createSlice({
     reducers: {
         LOGOUT: (state) => {
             AsyncStorage.removeItem("userToken")
+            AsyncStorage.removeItem("name")
+            AsyncStorage.removeItem("phone")
+            AsyncStorage.removeItem("studentCode")
             state.userToken = null
         },
         RETRIEVE_TOKEN: (state, action) => {

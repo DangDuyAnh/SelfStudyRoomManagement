@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -7,8 +7,59 @@ import {
   TouchableOpacity,
   Image
 } from "react-native";
+import DatePicker from 'react-native-date-picker'
+import axiosClient from "../../utils/axiosClient";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function RegisterRoom({ navigation }) {
+  const [dateRegister, setDateRegister] = useState(new Date())
+  
+  const [dateStart, setDateStart] = useState(new Date())
+  const [dateEnd, setDateEnd] = useState(new Date())
+  const [openStart, setOpenStart] = useState(false)
+  const [openEnd, setOpenEnd] = useState(false)
+  const [getDateStart, setGetDateStart] = useState('Chọn thời gian')
+  const [getDateEnd, setGetDateEnd] = useState('Chọn thời gian')
+
+  const [numberSeats, setNumberSeats] = useState('Chọn thời gian')
+  const [message, setMessage] = useState('Chọn thời gian')
+  const [typeRoom, setTypeRoom] = useState('Chọn thời gian')
+  
+  
+
+  const change_date_start = (date) => {
+    setGetDateStart(date.getHours() + ":" + date.getMinutes())
+  }
+
+  // const change_date= (date) => {
+  //   console.log("đâte", date)
+  //   setDate(date.getHours() + ":" + date.getMinutes())
+  // }
+
+  const change_date_end = (date) => {
+    setGetDateEnd(date.getHours() + ":" + date.getMinutes())
+  }
+
+  const registerRoom = async () => {
+    const _id = await AsyncStorage.getItem('userToken');
+    const params = {
+      "idStudent": _id,
+      "numberSeats": numberSeats,
+      "startTime": dateStart,
+      "endTime": dateEnd,
+      "message": message,
+      "typeRoom": typeRoom,
+      "dateRegister": dateRegister
+    }
+    // console.log(change_date(date))
+    const res = await axiosClient('post', '/registerForm/create', params)
+    if (res.status == 200){
+      alert("Đăng ký thành công hãy đợi người quản lý phê duyệt")
+      setTimeout(() => {navigation.goBack()}, 1000)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.quetQrCodeRow}>
@@ -27,6 +78,7 @@ export default function RegisterRoom({ navigation }) {
         <Text style={styles.soLuongSinhVien}>Số lượng sinh viên:</Text>
         <TextInput
           placeholder="Input"
+          onChangeText={setNumberSeats}
           style={styles.placeholder}
         ></TextInput>
       </View>
@@ -34,34 +86,73 @@ export default function RegisterRoom({ navigation }) {
         <Text style={styles.loaiPhong}>Loại phòng:</Text>
         <TextInput
           placeholder="Input"
+          onChangeText={setTypeRoom}
           style={styles.placeholder2}
         ></TextInput>
       </View>
       <View style={styles.thờiGianSửDụngRow}>
-        <Text style={styles.thờiGianSửDụng}>Thời gian sử dụng:</Text>
-        <TextInput
+        <Text style={styles.thờiGianSửDụng}>Thời gian kết thúc:</Text>
+        <TouchableOpacity style={styles.placeholder1}
+            onPress={() => { setOpenEnd(true) }}
+
+          >
+            <DatePicker
+              modal
+              open={openEnd}
+              date={dateEnd}
+              mode={"time"}
+              onConfirm={(dateEnd) => {
+                setOpenEnd(false)
+                setDateEnd(dateEnd)
+                change_date_end(dateEnd)
+              }}
+              onCancel={() => {
+                setOpenEnd(false)
+              }}
+            />
+            <Text style={styles.phongTựHọc2}>{getDateEnd}</Text>
+          </TouchableOpacity>
+
+        {/* <TextInput
           placeholder="Input"
           style={styles.placeholder1}
-        ></TextInput>
+        ></TextInput> */}
       </View>
       <View style={styles.phongHọcDềXuấtRow}>
-        <Text style={styles.phongHọcDềXuất}>Phòng học đề xuất:</Text>
+        {/* <Text style={styles.phongHọcDềXuất}>Phòng học đề xuất:</Text>
         <TextInput
           placeholder="Input"
           style={styles.placeholder3}
-        ></TextInput>
+        ></TextInput> */}
       </View>
       <View style={styles.yeuCầuKhacRow}>
-        <Text style={styles.yeuCầuKhac}>Yêu cầu khác:</Text>
-        <TextInput
-          placeholder="Input"
-          style={styles.placeholder4}
-        ></TextInput>
+        <Text style={styles.yeuCầuKhac}>Thời gian bắt đầu:</Text>
+        <TouchableOpacity style={styles.placeholder1}
+            onPress={() => { setOpenStart(true) }}
+
+          >
+            <DatePicker
+              modal
+              open={openStart}
+              date={dateStart}
+              mode={"time"}
+              onConfirm={(dateStart) => {
+                setOpenStart(false)
+                setDateStart(dateStart)
+                change_date_start(dateStart)
+              }}
+              onCancel={() => {
+                setOpenStart(false)
+              }}
+            />
+            <Text style={styles.phongTựHọc2}>{getDateStart}</Text>
+          </TouchableOpacity>
       </View>
       <Text style={styles.lờiNhắn}>Lời nhắn:</Text>
       <View style={styles.textAreaContainer} >
         <TextInput
           style={styles.textArea}
+          onChangeText={setMessage}
           underlineColorAndroid="transparent"
           placeholder="Type something"
           placeholderTextColor="grey"
@@ -69,7 +160,7 @@ export default function RegisterRoom({ navigation }) {
           multiline={true}
         />
       </View>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={registerRoom}>
         <Text style={styles.dangKy}>Đăng ký</Text>
       </TouchableOpacity>
     </View>
