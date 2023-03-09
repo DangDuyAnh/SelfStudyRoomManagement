@@ -1,13 +1,25 @@
 const mongoose = require("mongoose");
 
 const usingQRRoomSchema = new mongoose.Schema({
-    ID_Student: {
-        type: Number,
-        required: true
+    idStudent: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "students"
     },
-    ID_Room: {
-        type: Number,
-        required: true
+    idRoom: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "rooms"
+    },
+    startTime: {
+        type: Date,
+        required: false
+    },
+    endTime: {
+        type: Date,
+        required: false
+    },
+    status : {
+        type: Boolean,
+        required: false
     }
 });
 module.exports = mongoose.model('usingQRRoom', usingQRRoomSchema);
