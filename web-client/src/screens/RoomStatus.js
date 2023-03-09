@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-import { Typography } from '@mui/material';
+import { Typography, Autocomplete } from '@mui/material';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
@@ -16,14 +16,40 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import PlaceIcon from '@mui/icons-material/Place';
 import EventSeatIcon from '@mui/icons-material/EventSeat';
+import {axiosGet, axiosPost} from "../utils/api" 
 
 export default function RoomStatus() {
     const [value, setValue] = React.useState(new Date());
     const [status, setStatus] = React.useState('Tất cả');
+    const [buildings, setBuildings] = React.useState([{_id: "", name: "Tất cả"}]);
+    const [rooms, setRooms] = React.useState([{_id: "", name: "Tất cả"}]);
+    const [choosedIdBuilding, setChoosedIdBuilding] = React.useState();
+    const [choosedIdRoom, setChoosedIdRoom] = React.useState();
+
+    React.useEffect(() => {
+        getData();
+    }, [])
+
+    const getData = async () => {
+        const res = await axiosGet("/building/list");
+        setBuildings([{_id: "", name: "Tất cả"}, ...res.data]);
+    }
 
     const handleChange = (event) => {
         setStatus(event.target.value);
       };
+
+    const chosingBuilding = async (event, value) => {
+    setChoosedIdBuilding(value._id)
+    const res = await axiosPost("/room/list-by-building-name", {
+        buildingId: value._id
+    });
+    setRooms([{_id: "", name: "Tất cả"}, ...res.data.rooms]);
+    }   
+
+    const choosingRoom = (event, value) => {
+        setChoosedIdRoom(value._id)
+    }
 
     return(
         <div className="wrapper">
@@ -49,7 +75,6 @@ export default function RoomStatus() {
                                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                                         <DateTimePicker
                                             ampm={false}
-                                            inputFormat="DD.MM.YYYY HH:MM"
                                             value={value}
                                             onChange={(newValue) => {
                                             setValue(newValue);
@@ -67,16 +92,45 @@ export default function RoomStatus() {
                                 <Grid item xs={2.25}>
                                 <Box sx={{p: 2}}>
                                     <Typography sx={{fontSize: '12px', color: '#787878'
-                                    , fontWeight: '700', mb: 1}}>PHÒNG HỌC</Typography> 
-                                    <TextField></TextField>                                       
+                                    , fontWeight: '700', mb: 1}}>TÒA NHÀ</Typography> 
+                                            <Autocomplete
+                                                options={buildings}
+                                                autoHighlight
+                                                defaultValue={buildings[0]}
+                                                getOptionLabel={(option) => option.name}
+                                                onChange={chosingBuilding}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                    {...params}
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                        autoComplete: 'new-password', // disable autocomplete and autofill
+                                                    }}
+                                                    />
+                                                )}
+                                            />                                    
                                 </Box>
                                 </Grid>
 
                                 <Grid item xs={2.25}>
                                 <Box sx={{p: 2}}>
                                     <Typography sx={{fontSize: '12px', color: '#787878'
-                                    , fontWeight: '700', mb: 1}}>TÒA NHÀ</Typography> 
-                                    <TextField></TextField>                                       
+                                    , fontWeight: '700', mb: 1}}>PHÒNG HỌC</Typography> 
+                                            <Autocomplete
+                                                options={rooms}
+                                                autoHighlight
+                                                onChange={choosingRoom}
+                                                getOptionLabel={(option) => option.name}
+                                                defaultValue={rooms[0]}
+                                                renderInput={(params) => (
+                                                    <TextField
+                                                    {...params}
+                                                    inputProps={{
+                                                        ...params.inputProps,
+                                                    }}
+                                                    />
+                                                )}
+                                            />                                      
                                 </Box>
                                 </Grid>
 
@@ -90,8 +144,9 @@ export default function RoomStatus() {
                                         sx={{width: '100%'}}
                                         >
                                         <MenuItem value={"Tất cả"}>Tất cả</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
+                                        <MenuItem value={"little"}>Phòng vắng</MenuItem>
+                                        <MenuItem value={"normal"}>Trung bình</MenuItem>
+                                        <MenuItem value={"full"}>Phòng đầy</MenuItem>
                                     </Select>                                    
                                 </Box>
                                 </Grid>

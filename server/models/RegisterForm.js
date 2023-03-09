@@ -39,7 +39,12 @@ const registerFormSchema = new mongoose.Schema({
     status: {
         type: Number,
         required: false
-    }
+    }, 
+    assignedRoom: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "rooms",
+        required: false
+    },
 });
 
 registerFormSchema.set('timestamps', true);
